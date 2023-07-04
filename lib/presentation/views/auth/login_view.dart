@@ -8,7 +8,10 @@ import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/app_managers/strings.dart';
 import 'package:job_app/core/common_widgets/defaulttextformfield.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
+import 'package:job_app/presentation/views/auth/register_view.dart';
 import 'package:job_app/presentation/views/widgets/login_widgets/greetings_widget.dart';
+import 'package:page_animation_transition/animations/right_to_left_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/common_widgets/customButtonWidget.dart';
 
@@ -151,7 +154,7 @@ class LoginView extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        
+                        Navigator.of(context).push(PageAnimationTransition(page: const RegisterView(), pageAnimationType: RightToLeftTransition()));
                       },
                       child: Text(
                         'SignUp',
