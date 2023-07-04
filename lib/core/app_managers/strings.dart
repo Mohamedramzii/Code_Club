@@ -7,7 +7,8 @@ abstract class ENstrings {
   static const String password = 'Password';
   static const String forgotpassword = 'Forgot password?';
   static const String signin = 'Sign In';
-
+  static const String username = 'Username';
+  static const String enterusername = 'enter your Username';
 }
 
 abstract class ARstrings {
@@ -19,4 +20,6 @@ abstract class ARstrings {
   static const String password = 'الرقم السري';
   static const String forgotpassword = 'نسيت الرقم السري؟';
   static const String signin = 'تسجيل دخول';
+  static const String username = 'اسم المستجدم';
+  static const String enterusername = 'ادخل اسم المستخدم';
 }

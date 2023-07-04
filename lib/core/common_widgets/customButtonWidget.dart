@@ -26,16 +26,16 @@ class CustomButton extends StatelessWidget {
       // padding: EdgeInsets.symmetric(horizontal: 32.w),
       minWidth: 312.w,
       height: 33.h,
-      color: color
-      ,
+      color: color,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: bordercolor ?? ColorsManager.KTextFormFieldColor)),
+          side: BorderSide(
+              color: bordercolor ?? ColorsManager.KTextFormFieldColor)),
       onPressed: onpressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          widget??const SizedBox(),
+          widget ?? const SizedBox(),
           Text(
             text,
             style: FontManager.blacktext15.copyWith(color: textcolor),
