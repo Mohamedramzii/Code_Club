@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:job_app/core/app_managers/colors.dart';
 
 abstract class FontManager {
   static TextStyle text25 = GoogleFonts.poppins(
@@ -18,4 +19,9 @@ abstract class FontManager {
   static TextStyle blacktext12 = GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 12.sp, fontWeight: FontWeight.w500, color: Colors.black));
+  static TextStyle purpletext10 = GoogleFonts.poppins(
+      textStyle: TextStyle(
+          fontSize: 8.sp,
+          fontWeight: FontWeight.w500,
+          color: ColorsManager.KprimaryColor));
 }

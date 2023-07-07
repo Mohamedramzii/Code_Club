@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:job_app/core/app_managers/fonts.dart';
+
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
-
+import 'package:job_app/presentation/views/App_layout.dart';
+import 'package:job_app/presentation/views/ProfileView.dart';
 import 'package:job_app/presentation/views/auth/login_view.dart';
-import 'package:job_app/presentation/views/auth/register_view.dart';
 
 import 'core/classobserve.dart';
 import 'core/helpers/local/cache_helper.dart';
@@ -20,12 +21,25 @@ void main() async {
 
   tokenHolder = CacheHelper.getData(key: tokenKey) ?? 'no token yet';
   debugPrint(tokenHolder);
-  runApp(const MyApp());
+
+  Widget? widget;
+
+  if (tokenHolder=='no token yet') {
+    widget = LoginView();
+  } else {
+    widget = AppLayout();
+  }
+  runApp(MyApp(
+    widget: widget,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+  final Widget? widget;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -42,7 +56,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
               ),
-              home: LoginView()),
+              home: widget),
         );
       },
     );

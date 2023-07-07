@@ -5,8 +5,6 @@ import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 
 class CustomTextFormFieldWidget extends StatelessWidget {
- 
-
   const CustomTextFormFieldWidget({
     Key? key,
     required this.textfieldHeadername,
@@ -17,7 +15,8 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     required this.textinputaction,
     required this.onsave,
     required this.onvalidate,
-     this.onsubmit,
+    this.height,
+    this.onsubmit,
   }) : super(key: key);
   final String textfieldHeadername;
   final String hinttext;
@@ -27,7 +26,9 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   final TextInputAction textinputaction;
   final FormFieldSetter<String> onsave;
   final FormFieldValidator<String> onvalidate;
-  final Function(String) ?  onsubmit;
+  final double? height;
+
+  final Function(String)? onsubmit;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,42 +40,45 @@ class CustomTextFormFieldWidget extends StatelessWidget {
           Text(
             textfieldHeadername,
             style: FontManager.blacktext15,
-            textAlign: TextAlign.end,
+            textAlign: TextAlign.start,
+          ),
+          SizedBox(
+            height: height,
           ),
           SizedBox(
             height: 50.h,
             child: TextFormField(
               // autovalidateMode: AutovalidateMode.disabled,
-           textInputAction: textinputaction,
+              textInputAction: textinputaction,
               controller: controller,
               onSaved: onsave,
               validator: onvalidate,
-              onFieldSubmitted:onsubmit ,
+              onFieldSubmitted: onsubmit,
               obscureText: isPassword,
               keyboardType: textInputType,
               decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8.w),
+                contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 hintText: hinttext,
                 hintStyle: FontManager.greytext15,
                 // isCollapsed: true,
                 disabledBorder: InputBorder.none,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide:  BorderSide(color: ColorsManager.KTextFormFieldColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: ColorsManager.KprimaryColor),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.red),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.red),
-        ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide:
+                      BorderSide(color: ColorsManager.KTextFormFieldColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: ColorsManager.KprimaryColor),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.red),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.red),
+                ),
               ),
             ),
           )

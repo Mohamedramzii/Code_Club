@@ -2,13 +2,13 @@ abstract class ENstrings {
   static const String welcome = 'Welcome Back';
   static const String welcome2 = 'Welcome Back! please enter your details';
   static const String email = 'Email';
-  static const String enteremail = 'enter your email';
-  static const String enterpassword = 'enter your password';
+  static const String enteremail = 'Enter your email';
+  static const String enterpassword = 'Enter your password';
   static const String password = 'Password';
   static const String forgotpassword = 'Forgot password?';
   static const String signin = 'Sign In';
   static const String username = 'Username';
-  static const String enterusername = 'enter your Username';
+  static const String enterusername = 'Enter your Username';
 }
 
 abstract class ARstrings {
