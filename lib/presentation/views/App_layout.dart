@@ -1,7 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:job_app/core/app_managers/assets.dart';
+import 'package:job_app/core/app_managers/ImagesManager.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';

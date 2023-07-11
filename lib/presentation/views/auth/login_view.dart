@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_app/core/app_managers/assets.dart';
+import 'package:job_app/core/app_managers/ImagesManager.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/app_managers/strings.dart';
 import 'package:job_app/core/common_widgets/defaulttextformfield.dart';
+import 'package:job_app/core/constants.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 import 'package:job_app/presentation/views/auth/register_view.dart';
 import 'package:job_app/presentation/views/widgets/login_widgets/greetings_widget.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/common_widgets/customButtonWidget.dart';
+import '../App_layout.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({super.key});
@@ -62,6 +64,9 @@ class _LoginViewState extends State<LoginView> {
         listener: (context, state) {
           var cubit = BlocProvider.of<AppCubit>(context);
           if (state is LoginSuccessState) {
+            Navigator.of(context).pushReplacement(PageAnimationTransition(
+                page: const AppLayout(),
+                pageAnimationType: BottomToTopTransition()));
             MotionToast.success(description: Text(cubit.loginModel!.message!))
                 .show(context);
           }
@@ -82,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   //logo
                   SizedBox(
-                    height: 30.h,
+                    height: 90.h,
                   ),
                   const GreetingsWidget(),
                   SizedBox(
@@ -168,24 +173,28 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.w),
-                    child: CustomButton(
-                      text: ENstrings.signin,
-                      color: ColorsManager.KprimaryColor,
-                      bordercolor: ColorsManager.KprimaryColor,
-                      textcolor: Colors.white,
-                      onpressed: () {
-                        if (formKey.currentState!.validate()) {
-                          formKey.currentState!.save();
-                          cubit.login(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              context: context);
-                        }
-                      },
-                    ),
-                  ),
+                  state is! LoginLoadingState
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 32.w),
+                          child: CustomButton(
+                            text: ENstrings.signin,
+                            color: ColorsManager.KprimaryColor,
+                            bordercolor: ColorsManager.KprimaryColor,
+                            textcolor: Colors.white,
+                            onpressed: () {
+                              if (formKey.currentState!.validate()) {
+                                formKey.currentState!.save();
+                                cubit.login(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    context: context);
+                              }
+                            },
+                          ),
+                        )
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32.w),
                     child: CustomButton(
@@ -462,7 +471,7 @@ class _LoginViewState extends State<LoginView> {
                           forgotemailController.text = value!;
                         },
                         onvalidate: (value) {
-                          if (value!.isEmpty || !value.contains('@')) {
+                          if (value!.isEmpty || !emailRegex.hasMatch(value)) {
                             return 'enter a valid email address';
                           }
                           return null;
@@ -477,8 +486,9 @@ class _LoginViewState extends State<LoginView> {
                               if (formKeybtmsheet1.currentState!.validate()) {
                                 formKeybtmsheet1.currentState!.save();
                                 //send
-                                // cubit.emailRequest(
-                                //     email: forgotemailController.text.trim());
+                                cubit.emailRequest(
+                                    email: 'mohamedramzii219@gmail.com');
+                                print('Email: ${forgotemailController.text}');
                                 // DioHelper.httpPost(email: forgotemailController.text);
                                 // DioHelper.DioPost();
 

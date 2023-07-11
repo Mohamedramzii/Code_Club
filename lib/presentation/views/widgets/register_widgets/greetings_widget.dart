@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/app_managers/assets.dart';
+import '../../../../core/app_managers/ImagesManager.dart';
 import '../../../../core/app_managers/fonts.dart';
 
 class GreetingsWidgetRegister extends StatelessWidget {

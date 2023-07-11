@@ -123,9 +123,9 @@ foreach(bundled_library ${PLUGIN_BUNDLED_LIBRARIES})
     COMPONENT Runtime)
 endforeach(bundled_library)
 
-# Fully re-copy the assets directory on each build to avoid having stale files
+# Fully re-copy the ImagesManager directory on each build to avoid having stale files
 # from a previous install.
-set(FLUTTER_ASSET_DIR_NAME "flutter_assets")
+set(FLUTTER_ASSET_DIR_NAME "flutter_ImagesManager")
 install(CODE "
   file(REMOVE_RECURSE \"${INSTALL_BUNDLE_DATA_DIR}/${FLUTTER_ASSET_DIR_NAME}\")
   " COMPONENT Runtime)

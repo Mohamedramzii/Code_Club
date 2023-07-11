@@ -1,7 +1,8 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_app/core/app_managers/assets.dart';
 import 'package:job_app/presentation/views/widgets/profile_widgets/divider.dart';
 import 'package:job_app/presentation/views/widgets/profile_widgets/infoBlock_widget.dart';
 
@@ -16,41 +17,75 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AppCubit, AppState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          var cubit = BlocProvider.of<AppCubit>(context);
-          return SingleChildScrollView(
-            child: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Cover_ProfileImagesWidget(),
-                  SizedBox(
-                    height: 65.h,
+      body: BlocProvider(
+        create: (context) => AppCubit()..getUserData(),
+        child: BlocConsumer<AppCubit, AppState>(
+          listener: (context, state) async {
+            AppCubit cubit = BlocProvider.of<AppCubit>(context);
+            if (state is UpdateUserDataSuccessState) {
+              await cubit.getUserData();
+            }
+          },
+          builder: (context, state) {
+            if (state is GetUserDataSuccessState) {
+              AppCubit cubit = BlocProvider.of<AppCubit>(context);
+
+              return SingleChildScrollView(
+                child: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Cover_ProfileImagesWidget(cubit: cubit),
+                      SizedBox(
+                        height: 65.h,
+                      ),
+                      UserDetailsWidget(
+                        name: cubit.userDataModel!.name!,
+                        bio: cubit.userDataModel!.bio == null
+                            ? '@yourBio'
+                            : '@${cubit.userDataModel!.bio}',
+                        joinedat: cubit.userDataModel!.joinedAt!,
+                        cubit: cubit,
+                        // isInUpdateMode: cubit.isInUpdateMode!,
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      const CustomDivider(),
+                      SizedBox(
+                        height: 12.h,
+                      ),
+                      InfoBlockWidget(cubit: cubit,
+                        email: cubit.userDataModel!.email!,
+                        joinedat: cubit.userDataModel!.joinedAt!,
+                        phone: cubit.userDataModel?.phoneNumber ??
+                            '+20 0113456879',
+                        website:
+                            cubit.userDataModel?.website ?? 'www.codeclub.com',
+                      ),
+                      SizedBox(
+                        height: 21.h,
+                      ),
+                      const CustomDivider(),
+                      SizedBox(
+                        height: 24.h,
+                      ),
+                      SkillsBlockWidget()
+                    ],
                   ),
-                  const UserDetailsWidget(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  const CustomDivider(),
-                  SizedBox(
-                    height: 12.h,
-                  ),
-                  const InfoBlockWidget(),
-                  SizedBox(
-                    height: 21.h,
-                  ),
-                  const CustomDivider(),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                   SkillsBlockWidget()
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            } else if (state is GetUserDataFailureState) {
+              return Center(
+                child: Text(state.errMessage),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_app/core/app_managers/fonts.dart';
 
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 import 'package:job_app/presentation/views/App_layout.dart';
-import 'package:job_app/presentation/views/ProfileView.dart';
 import 'package:job_app/presentation/views/auth/login_view.dart';
 
 import 'core/classobserve.dart';
@@ -24,10 +22,10 @@ void main() async {
 
   Widget? widget;
 
-  if (tokenHolder=='no token yet') {
+  if (tokenHolder == 'no token yet') {
     widget = LoginView();
   } else {
-    widget = AppLayout();
+    widget = const AppLayout();
   }
   runApp(MyApp(
     widget: widget,
@@ -37,7 +35,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({
     Key? key,
-    required this.widget,
+    this.widget,
   }) : super(key: key);
   final Widget? widget;
   @override
@@ -45,7 +43,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       splitScreenMode: true,
-      // useInheritedMediaQuery: truer,
+      useInheritedMediaQuery: true,
       builder: (context, child) {
         return BlocProvider<AppCubit>(
           create: (context) => AppCubit(),

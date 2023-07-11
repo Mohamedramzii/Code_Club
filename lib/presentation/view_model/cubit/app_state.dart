@@ -69,6 +69,56 @@ class ResetPasswordFailureState extends AppState {
   });
 }
 
-
 //Nav Bar states
 class NavBarSuccessState extends AppState {}
+
+//home page categories bar
+class CategoriesIndexChangeSuccessState extends AppState {}
+
+//Get user data states
+
+class GetUserDataLoadingState extends AppState {}
+
+class GetUserDataSuccessState extends AppState {}
+
+class GetUserDataFailureState extends AppState {
+  final String errMessage;
+  GetUserDataFailureState({
+    required this.errMessage,
+  });
+}
+
+//is in update mode state
+class IsInUpdateModeSuccesState extends AppState {
+  final bool isUpdateMode;
+  IsInUpdateModeSuccesState({
+    required this.isUpdateMode,
+  });
+}
+
+//Update user data states
+class UpdateUserDataLoadingState extends AppState {}
+
+class UpdateUserDataSuccessState extends AppState {}
+
+class UpdateUserDataFailureState extends AppState {
+  final String errMessage;
+  UpdateUserDataFailureState({
+    required this.errMessage,
+  });
+}
+
+//Pick a file states
+class PickAFileLoadingState extends AppState {}
+
+class PickAFileSuccessState extends AppState {}
+
+class PickAFileFailureState extends AppState {
+  final String errMessage;
+  PickAFileFailureState({
+    required this.errMessage,
+  });
+}
+
+
+class PickPDFsuccessState extends AppState {}

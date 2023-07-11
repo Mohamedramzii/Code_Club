@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/common_widgets/customButtonWidget.dart';
 import 'package:job_app/core/common_widgets/defaulttextformfield.dart';
-import 'package:motion_toast/motion_toast.dart';
-
 import '../../view_model/cubit/app_cubit.dart';
 
 class ForgotPasswordView extends StatefulWidget {

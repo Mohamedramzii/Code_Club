@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/app_managers/assets.dart';
+import '../../../../core/app_managers/ImagesManager.dart';
 import '../../../../core/app_managers/fonts.dart';
 import '../../../../core/app_managers/strings.dart';
 

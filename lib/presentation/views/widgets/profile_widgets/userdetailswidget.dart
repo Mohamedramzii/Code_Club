@@ -1,26 +1,43 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_app/core/app_managers/fonts.dart';
 
+import 'package:job_app/core/app_managers/fonts.dart';
+import 'package:job_app/core/common_widgets/dialog_widget.dart';
+
+import '../../../view_model/cubit/app_cubit.dart';
 import 'custom_container_widget.dart';
 
 class UserDetailsWidget extends StatelessWidget {
-  const UserDetailsWidget({super.key});
+  UserDetailsWidget({
+    Key? key,
+    required this.name,
+    required this.joinedat,
+    required this.bio,
+    required this.cubit,
+  }) : super(key: key);
+  final String name;
+  final String joinedat;
+  final String bio;
+  final AppCubit cubit;
+  // final bool isInUpdateMode;
 
+  final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          '@Fredrick',
-          style: FontManager.greytext12,
-        ),
-        Text(
-          'Muhammed Ramzy Gad',
-          style: FontManager.blacktext15,
-        ),
+        _buildRow(
+            context: context,
+            text: bio,
+            textstyle: FontManager.greytext12,
+            whatToUpdate: 'bio'),
+        _buildRow(
+            context: context,
+            text: name,
+            textstyle: FontManager.blacktext15,
+            whatToUpdate: 'username'),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -36,35 +53,35 @@ class UserDetailsWidget extends StatelessWidget {
             SizedBox(
               width: 10.w,
             ),
-            Text('Joined March 2023', style: FontManager.purpletext10),
+            Text('Joined at $joinedat', style: FontManager.purpletext10),
           ],
         ),
         SizedBox(
           height: 21.h,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CustomContainerWidget(
-              icon: Icons.person,
-              text: 'Follow',
-            ),
-            SizedBox(
-              width: 6.w,
-            ),
-            const CustomContainerWidget(
-              icon: EvaIcons.messageCircleOutline,
-              text: 'Message',
-            ),
-            SizedBox(
-              width: 6.w,
-            ),
-            const CustomContainerWidget(
-              icon: EvaIcons.moreHorizontalOutline,
-              text: 'More',
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     const CustomContainerWidget(
+        //       icon: Icons.person,
+        //       text: 'Follow',
+        //     ),
+        //     SizedBox(
+        //       width: 6.w,
+        //     ),
+        //     const CustomContainerWidget(
+        //       icon: EvaIcons.messageCircleOutline,
+        //       text: 'Message',
+        //     ),
+        //     SizedBox(
+        //       width: 6.w,
+        //     ),
+        //     const CustomContainerWidget(
+        //       icon: EvaIcons.moreHorizontalOutline,
+        //       text: 'More',
+        //     ),
+        //   ],
+        // ),
         SizedBox(
           height: 15.h,
         ),
@@ -76,6 +93,47 @@ class UserDetailsWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         )
+      ],
+    );
+  }
+
+  Row _buildRow(
+      {required String text,
+      required TextStyle textstyle,
+      required String whatToUpdate,
+      required context}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          text,
+          style: textstyle,
+        ),
+        GestureDetector(
+            onTap: () {
+              CustomDialog.ShowDialog(
+                  context: context,
+                  controller: controller,
+                  // data: data,
+                  whatToUpdate: whatToUpdate,
+                  onpressed: () {
+                    if (controller.text.isNotEmpty) {
+                      cubit.updateUserData(
+                          context: context,
+                          dataToChange: whatToUpdate,
+                          updateData: controller.text.isEmpty
+                              ? 'Empty Data'
+                              : controller.text);
+                      Navigator.pop(context);
+                    } else {
+                      return;
+                    }
+                  });
+            },
+            child: const Icon(
+              EvaIcons.edit2,
+              size: 20,
+            ))
       ],
     );
   }

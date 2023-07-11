@@ -7,7 +7,7 @@ import 'package:job_app/presentation/views/ProfileView.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
-import '../../../core/app_managers/assets.dart';
+import '../../../core/app_managers/ImagesManager.dart';
 import '../../../core/app_managers/colors.dart';
 import '../../../core/app_managers/fonts.dart';
 import '../../../core/app_managers/strings.dart';

@@ -25,22 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  bottom_inset_observer:
-    dependency: transitive
-    description:
-      name: bottom_inset_observer
-      sha256: cbfb01e0e07cc4922052701786d5e607765a6f54e1844f41061abf8744519a7d
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
-  bottom_sheet:
-    dependency: "direct main"
-    description:
-      name: bottom_sheet
-      sha256: "7a3d4a1515eba91a7d9e1359e49416147de339889170fc879a8b905d27958c94"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.2"
   characters:
     dependency: transitive
     description:
@@ -81,14 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  custom_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: custom_navigation_bar
-      sha256: "2e00e138a1eba71c288aadbcd728f1f8caebf659b95b793aae08a9c0d70ca941"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.2"
   dio:
     dependency: "direct main"
     description:
@@ -129,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      sha256: b1729fc96627dd44012d0a901558177418818d6bd428df59dcfeb594e5f66432
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -150,6 +134,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: "950e77c2bbe1692bc0874fc7fb491b96a4dc340457f4ea1641443d0a6c1ea360"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.15"
+  flutter_rating_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_rating_bar
+      sha256: d2af03469eac832c591a1eba47c91ecc871fe5708e69967073c043b2d775ed93
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -320,6 +320,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.7"
+  pdf_render:
+    dependency: "direct main"
+    description:
+      name: pdf_render
+      sha256: b4a5b81af382a2270047d4191496e4efd60f19c2807f64dc9dc8f55c97b5c0d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   platform:
     dependency: transitive
     description:

@@ -21,7 +21,12 @@ abstract class FontManager {
           fontSize: 12.sp, fontWeight: FontWeight.w500, color: Colors.black));
   static TextStyle purpletext10 = GoogleFonts.poppins(
       textStyle: TextStyle(
-          fontSize: 8.sp,
+          fontSize: 10.sp,
           fontWeight: FontWeight.w500,
           color: ColorsManager.KprimaryColor));
+  static TextStyle text10 = GoogleFonts.poppins(
+      textStyle: TextStyle(
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w500,
+          color: ColorsManager.ksometextsColor));
 }
