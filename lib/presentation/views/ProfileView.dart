@@ -41,11 +41,14 @@ class ProfileView extends StatelessWidget {
                       ),
                       UserDetailsWidget(
                         name: cubit.userDataModel!.name!,
-                        bio: cubit.userDataModel!.bio == null
-                            ? '@yourBio'
-                            : '@${cubit.userDataModel!.bio}',
+                        slug: cubit.userDataModel!.slug == null
+                            ? '@yourslug'
+                            : '@${cubit.userDataModel!.slug}',
                         joinedat: cubit.userDataModel!.joinedAt!,
                         cubit: cubit,
+                        bio: cubit.userDataModel!.bio == null
+                            ? '@yourBio'
+                            : '${cubit.userDataModel!.bio}',
                         // isInUpdateMode: cubit.isInUpdateMode!,
                       ),
                       SizedBox(
@@ -55,7 +58,8 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 12.h,
                       ),
-                      InfoBlockWidget(cubit: cubit,
+                      InfoBlockWidget(
+                        cubit: cubit,
                         email: cubit.userDataModel!.email!,
                         joinedat: cubit.userDataModel!.joinedAt!,
                         phone: cubit.userDataModel?.phoneNumber ??
@@ -70,7 +74,9 @@ class ProfileView extends StatelessWidget {
                       SizedBox(
                         height: 24.h,
                       ),
-                      SkillsBlockWidget()
+                      SkillsBlockWidget(
+                        cubit: cubit,
+                      )
                     ],
                   ),
                 ),

@@ -1,29 +1,38 @@
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:typed_data';
-
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:job_app/core/app_managers/colors.dart';
+import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/common_widgets/customButtonWidget.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 import 'package:job_app/presentation/views/widgets/project_viewWidgets/eachItemWidget.dart';
+
 import '../../core/app_managers/strings.dart';
+import '../../core/common_widgets/customToastWidget.dart';
 
 class TripView extends StatelessWidget {
-  const TripView({super.key});
+  TripView({
+    Key? key,
+  }) : super(key: key);
   static TextEditingController controller1 = TextEditingController();
   static TextEditingController controller2 = TextEditingController();
   static TextEditingController controller3 = TextEditingController();
   static TextEditingController controller4 = TextEditingController();
   static TextEditingController controller5 = TextEditingController();
 
+  List<String> skills = [];
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is PostJobDataSuccessState) {
+          Toast.successToast(text: state.successMessage);
+        }
+      },
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);
         return Scaffold(
@@ -88,7 +97,10 @@ class TripView extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      cubit.pickFile();
+                      // cubit.pickFile();
+                      // cubit.pickFiles2();
+                      cubit.openFilesss(context, cubit.openFile,
+                          cubit.multipleFileResult?.files ?? []);
                     },
                     child: Container(
                       width: 110.w,
@@ -102,43 +114,110 @@ class TripView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (cubit.pickedFilePlatform != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // if (cubit.pickedFilePlatform != null)
-                        SizedBox(
-                          height: 80.h,
-                          width: 200.w,
-                          child: Image.file(cubit.fileToDisplay!),
-                        ),
-                        // if (cubit.pageImage != null)
-                        //   SizedBox(
-                        //     height: 80.h,
-                        //     width: 200.w,
-                        //     child: Image.memory(
-                        //         cubit.pageImage! ),
-                        //   ),
-                        Text(cubit.filename!)
-                      ],
+                  if (cubit.multipleFileResult != null)
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minWidth: double.infinity,
+                          maxWidth: double.infinity,
+                          minHeight: 20.h,
+                          maxHeight: 300.h),
+                      // width: double.infinity,
+                      // height: 100.h,
+                      child: GridView.builder(
+                        itemCount: cubit.multipleFileResult?.files.length ?? 0,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 8,
+                                crossAxisSpacing: 8),
+                        itemBuilder: (context, index) {
+                          final file = cubit.multipleFileResult?.files[index];
+                          return _buildFileItemWidget(file!, cubit);
+                        },
+                      ),
                     ),
                   SizedBox(
                     height: 25.h,
                   ),
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 80.w),
-                    child: CustomButton(
-                        text: 'Post Now',
-                        color: ColorsManager.KprimaryColor,
-                        textcolor: Colors.white,
-                        onpressed: () {}),
-                  )
+                  state is PostJobDataLoadingState
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 80.w),
+                          child: CustomButton(
+                              text: 'Post Now',
+                              color: ColorsManager.KprimaryColor,
+                              textcolor: Colors.white,
+                              onpressed: () {
+                                List<String> skillsSplit =
+                                    controller2.text.split(',');
+                                if (controller1.text.isNotEmpty &&
+                                    controller2.text.isNotEmpty &&
+                                    controller3.text.isNotEmpty &&
+                                    controller4.text.isNotEmpty &&
+                                    controller5.text.isNotEmpty) {
+                                  cubit.postJobData(
+                                      title: controller1.text,
+                                      skills: skillsSplit,
+                                      description: controller3.text,
+                                      budget: int.parse(controller4.text),
+                                      time: controller5.text);
+
+                                  controller1.clear();
+                                  controller2.clear();
+                                  controller3.clear();
+                                  controller4.clear();
+                                  controller5.clear();
+                                }
+                              }),
+                        )
                 ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildFileItemWidget(PlatformFile? file, AppCubit cubit) {
+    final kb = file!.size / 1024;
+    final mb = kb / 1024;
+    final fileSize =
+        mb >= 1 ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
+    final extention = file.extension ?? 'none';
+
+    print(file.name);
+
+    return InkWell(
+      onTap: () => cubit.openFile(file),
+      child: Container(
+        padding: EdgeInsets.all(8.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: 60.h,
+              decoration: BoxDecoration(
+                  color: file.extension == 'PDF' || file.extension == 'pdf'
+                      ? Colors.red.shade700
+                      : file.extension == 'jpg'
+                          ? Colors.blue
+                          : Colors.grey,
+                  borderRadius: BorderRadius.circular(12.r)),
+              child: Text(
+                '.$extention',
+                style: FontManager.blacktext15,
+              ),
+            ),
+            Text(file.name),
+            Text(fileSize)
+          ],
+        ),
+      ),
     );
   }
 }

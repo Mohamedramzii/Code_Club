@@ -36,7 +36,7 @@ class Cover_ProfileImagesWidget extends StatelessWidget {
             //         onPressed: () {
             //           cubit.changeUpdateMode();
             //           // cubit.update();
-            //           // cubit.isInUpdateMode = true; 
+            //           // cubit.isInUpdateMode = true;
             //           // setState(() {
             //           //   widget.cubit.isInUpdateMode=true;
             //           // });

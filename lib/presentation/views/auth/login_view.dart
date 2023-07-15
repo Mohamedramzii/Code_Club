@@ -10,12 +10,12 @@ import 'package:job_app/core/constants.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 import 'package:job_app/presentation/views/auth/register_view.dart';
 import 'package:job_app/presentation/views/widgets/login_widgets/greetings_widget.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/common_widgets/customButtonWidget.dart';
+import '../../../core/common_widgets/customToastWidget.dart';
 import '../App_layout.dart';
 
 class LoginView extends StatefulWidget {
@@ -67,12 +67,10 @@ class _LoginViewState extends State<LoginView> {
             Navigator.of(context).pushReplacement(PageAnimationTransition(
                 page: const AppLayout(),
                 pageAnimationType: BottomToTopTransition()));
-            MotionToast.success(description: Text(cubit.loginModel!.message!))
-                .show(context);
+            Toast.successToast(text: cubit.loginModel!.message!);
           }
           if (state is EmailRequestFailureState) {
-            MotionToast.error(description: Text(state.errMessage))
-                .show(context);
+            Toast.failureToast(text: state.errMessage);
           }
         },
         builder: (context, state) {

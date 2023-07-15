@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/local/cache_helper.dart';
-
+import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'widgets/home_widgets/caetgories_widget.dart';
 import 'widgets/home_widgets/header_widgets.dart';
 import 'widgets/home_widgets/listviewITEM.dart';
@@ -13,39 +15,57 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // BlocProvider.of<AppCubit>(context).getUserData();
     tokenHolder = CacheHelper.getData(key: tokenKey);
-    return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 50.h),
-      child: Column(
-        children: [
-          const HeaderWidget(),
-          SizedBox(
-            height: 35.h,
-          ),
-          const SearchBoxWidget(),
-          SizedBox(
-            height: 20.h,
-          ),
-          const CategoriesIwidget(),
-          Flexible(
-            // flex: 50,
-            child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return const ListViewItem();
-                },
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: 5),
-          ),
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = BlocProvider.of<AppCubit>(context);
+        return Scaffold(
+            body: Padding(
+          padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 50.h),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              HeaderWidget(cubit: cubit),
+              SizedBox(
+                height: 35.h,
+              ),
+              const SearchBoxWidget(),
+              SizedBox(
+                height: 20.h,
+              ),
+              const CategoriesIwidget(),
+              if (state is GetJobDataLoadingState) const Spacer(),
+              Flexible(
+                // flex: 50,
+                child: state is GetJobDataLoadingState
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.separated(
+                        itemBuilder: (context, index) {
+                          return ListViewItem(cubit: cubit, index: index);
+                        },
+                        separatorBuilder: (context, index) => const Divider(),
+                        itemCount: cubit.jobs.length),
+              ),
 
-          // SizedBox(height: 5.h,),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 25.h),
-            child:
-                Text('< 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 >'),
-          )
-        ],
-      ),
-    ));
+              // SizedBox(height: 5.h,),
+              Padding(
+                  padding: EdgeInsets.symmetric(vertical: 25.h),
+                  child: NumberPaginator(
+                    numberPages: cubit.numberofPages,
+                    initialPage: 0,
+                    onPageChange: (index) {
+                      cubit.changePage(index);
+                      print(cubit.currentPage);
+                    },
+                  ))
+            ],
+          ),
+        ));
+      },
+    );
   }
 }

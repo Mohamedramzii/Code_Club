@@ -32,6 +32,17 @@ class LoginFailureState extends AppState {
   });
 }
 
+//Logout
+class LogoutSuccessState extends AppState {}
+
+class LogoutLoadingState extends AppState {}
+
+class LogoutFailureState extends AppState {
+  final String errMessage;
+  LogoutFailureState({
+    required this.errMessage,
+  });
+}
 //Email request States
 
 class EmailRequestSuccessState extends AppState {}
@@ -88,14 +99,6 @@ class GetUserDataFailureState extends AppState {
   });
 }
 
-//is in update mode state
-class IsInUpdateModeSuccesState extends AppState {
-  final bool isUpdateMode;
-  IsInUpdateModeSuccesState({
-    required this.isUpdateMode,
-  });
-}
-
 //Update user data states
 class UpdateUserDataLoadingState extends AppState {}
 
@@ -120,5 +123,40 @@ class PickAFileFailureState extends AppState {
   });
 }
 
+//add skill state
+class AddSkillsuccessState extends AppState {}
 
-class PickPDFsuccessState extends AppState {}
+class AddSkillLoadingState extends AppState {}
+
+//Post a Job states
+class PostJobDataLoadingState extends AppState {}
+
+class PostJobDataSuccessState extends AppState {
+  final String successMessage;
+  PostJobDataSuccessState({
+    required this.successMessage,
+  });
+}
+
+class PostJobDataFailureState extends AppState {
+  final String errMessage;
+  PostJobDataFailureState({
+    required this.errMessage,
+  });
+}
+
+//Get Jobs states
+class GetJobDataLoadingState extends AppState {}
+
+class GetJobDataSuccessState extends AppState {}
+
+class GetJobDataFailureState extends AppState {
+  final String errMessage;
+  GetJobDataFailureState({
+    required this.errMessage,
+  });
+}
+
+
+//Number Navigator state
+class ChangeNumberNavigatorSucessState extends AppState{}

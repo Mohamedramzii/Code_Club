@@ -22,7 +22,8 @@ abstract class ENstrings {
   static const String belowprojectBudget =
       'Choose a suitable budget to get good deals';
   static const String deliverytime = 'Expected Delivery Time (In Days)';
-  static const String belowdeliverytime = 'When do you need to receive your project?';
+  static const String belowdeliverytime =
+      'When do you need to receive your project?';
 }
 
 abstract class ARstrings {

@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -9,14 +7,16 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/network/dio_helper.dart';
+import 'package:job_app/data/jobdetails_model/jobdetails_model.dart';
 import 'package:job_app/data/register_model2/register_model2.dart';
-import 'package:job_app/data/user_data_model.dart';
 import 'package:job_app/presentation/views/home_view.dart';
 import 'package:job_app/presentation/views/trip_view.dart';
 import 'package:meta/meta.dart';
-import 'package:pdf_render/pdf_render.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../core/helpers/local/cache_helper.dart';
 import '../../../data/login_model/login_model.dart';
+import '../../../data/userdata_model.dart';
 import '../../views/ProfileView.dart';
 
 part 'app_state.dart';
@@ -83,6 +83,13 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  logout() {
+    emit(LogoutLoadingState());
+    CacheHelper.clearData(key: tokenKey);
+    currentIndex = 0;
+    emit(LogoutSuccessState());
+  }
+
   String? requestResponseMessage = '';
 
   emailRequest({required String email}) async {
@@ -121,7 +128,7 @@ class AppCubit extends Cubit<AppState> {
   //nav bar
   List<Widget> screens = [
     const HomeView(),
-    const TripView(),
+    TripView(),
     const ProfileView(),
     const ProfileView()
   ];
@@ -130,6 +137,7 @@ class AppCubit extends Cubit<AppState> {
 
   changeNavBar(int index) {
     currentIndex = index;
+
     emit(NavBarSuccessState());
   }
 
@@ -139,25 +147,17 @@ class AppCubit extends Cubit<AppState> {
     emit(CategoriesIndexChangeSuccessState());
   }
 
-  UserDataModel? userDataModel;
-
-  // bool isLoaded = false;
+  UserdataModel? userDataModel;
+  List skills = [];
   getUserData() async {
-    // if (isLoaded == true) {
-    //   // Data is already loaded, no need to make a request
-    //   debugPrint('Data is Loaded');
-    //   emit(GetUserDataSuccessState());
-    //   return;
-    // }
-    // emit(GetUserDataLoadingState());
-
     emit(GetUserDataLoadingState());
     try {
       Response response = await DioHelper.getData(
           url: EndPoints.UPDATEUSERDATA, token: 'Token $tokenHolder');
-      userDataModel = UserDataModel.fromJson(response.data);
-      // isLoaded = true;
-      // print(isLoaded);
+      userDataModel = UserdataModel.fromJson(response.data);
+      // userDataModel.skills!.add('dev');
+      skills = userDataModel!.skills!;
+      print(userDataModel!.skills);
       emit(GetUserDataSuccessState());
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
@@ -169,7 +169,7 @@ class AppCubit extends Cubit<AppState> {
 
   updateUserData(
       {required String dataToChange,
-      required String updateData,
+      required dynamic updateData,
       context}) async {
     emit(UpdateUserDataLoadingState());
     try {
@@ -185,49 +185,104 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  FilePickerResult? fileResult;
-  String? filename;
-  PlatformFile? pickedFilePlatform;
-  File? fileToDisplay;
-
   pickFile() async {
-    emit(PickAFileLoadingState());
-    try {
-      fileResult = (await FilePicker.platform.pickFiles(
-        type: FileType.any,
-        // allowedExtensions: ['pdf'],
-        //single file
-        allowMultiple: false,
-      ))!;
-      if (fileResult != null) {
-        filename = fileResult!.files.first.name;
-        pickedFilePlatform = fileResult!.files.first;
-        fileToDisplay = File(fileResult!.files.single.path!);
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
 
-        document = await PdfDocument.openFile(fileResult!.files.single.path!);
-        _loadPageImage();
-        debugPrint('FileName: $filename');
-        emit(PickAFileSuccessState());
-      }
-    } catch (e) {
-      emit(PickAFileFailureState(errMessage: e.toString()));
+    // Open Single File
+    final file = result.files.first;
+    // openFile(file);
+    debugPrint('Name: ${file.name}');
+    debugPrint('Bytes: ${file.bytes}');
+    debugPrint('Size: ${file.size}');
+    debugPrint('Extention: ${file.extension}');
+    debugPrint('Path: ${file.path}');
+
+    final newFile = await saveFilePermanently(file);
+    debugPrint('Path of newFile: ${newFile.path}');
+  }
+
+  Future<File> saveFilePermanently(PlatformFile file) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final newFile = File('${appStorage.path}/${file.name}');
+    return File(file.path!).copy(newFile.path);
+  }
+
+//open multiple files
+  FilePickerResult? multipleFileResult;
+  void openFilesss(context, ValueChanged<PlatformFile>? onOpenFile,
+      List<PlatformFile>? files) async {
+    multipleFileResult = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: FileType.any);
+    if (multipleFileResult == null) return null;
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => TripView(
+    //     files: multipleFileResult.files,
+    //     onOpenFile: onOpenFile,
+    //   ),
+    // ));
+    emit(PickAFileSuccessState());
+  }
+
+  //Open a single file
+  void openFile(PlatformFile platformfile) {
+    OpenFile.open(platformfile.path);
+  }
+
+  postJobData({
+    required String title,
+    required dynamic skills,
+    required String description,
+    required int budget,
+    required String time,
+  }) async {
+    emit(PostJobDataLoadingState());
+
+    try {
+      var response = await DioHelper.postData(
+        url: EndPoints.job,
+        data: {
+          "title": title,
+          "skills": skills,
+          "description": description,
+          "budget": budget,
+          "time": time,
+        },
+        token: 'Token $tokenHolder',
+      );
+
+      emit(PostJobDataSuccessState(successMessage: response.data['message']));
+    } on DioError catch (e) {
+      debugPrint('Post Job error Message: ${e.message}');
+      debugPrint('Post Job error statusCode: ${e.response!}');
+      emit(PostJobDataFailureState(errMessage: e.toString()));
     }
   }
 
-  PdfDocument? document;
-  PdfPageImage? pageImage;
-  int pageNumber = 1;
+  List<JobdetailsModel> jobs = [];
+  getJobs() {
+    emit(GetJobDataLoadingState());
 
-  Future<void> _loadPageImage() async {
-    final page = await document!.getPage(pageNumber);
-    final image = await page.render(
-      width: 100,
-      height: 100,
+    if (jobs.isEmpty) {
+      DioHelper.getData(url: EndPoints.job, token: 'Token $tokenHolder')
+          .then((value) {
+        for (var job in value.data) {
+          jobs.add(JobdetailsModel.fromJson(job));
+        }
+        debugPrint('Get Jobs : Success');
+        emit(GetJobDataSuccessState());
+      }).catchError((e) {
+        debugPrint('Get Jobs Error : ${e.toString()} }');
+        emit(GetJobDataFailureState(errMessage: e.toString()));
+      });
+    }
+  }
 
-      // format: PdfPageFormat.JPEG,
-    );
+  final int numberofPages = 20;
+  int? currentPage = 0;
 
-    pageImage = image;
-    emit(PickPDFsuccessState());
+  changePage(index) {
+    currentPage = index + 1;
+    emit(NavBarSuccessState());
   }
 }

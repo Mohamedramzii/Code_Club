@@ -7,17 +7,6 @@ class DioHelper {
   static Dio dio = Dio();
 
   static init() {
-    // dio.interceptors.add(InterceptorsWrapper(
-    //   onRequest: (options, handler) async {
-    //     if (await _isConnected()) {
-    //       handler.next(options);
-    //     } else {
-    //       handler.reject(DioError(
-    //           error: 'No internet connection available.',
-    //           requestOptions: options));
-    //     }
-    //   },
-    // ));
     dio = Dio(BaseOptions(
         baseUrl: 'https://codeclub.pythonanywhere.com/user/',
         headers: {

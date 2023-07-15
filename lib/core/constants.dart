@@ -7,17 +7,14 @@ abstract class EndPoints {
   static const OTPReQUEST = 'otp_request/';
   static const RESETPASSWORD = 'reset_password/';
   static const UPDATEUSERDATA = 'update/';
+  static const job = 'https://codeclub.pythonanywhere.com/job/';
 }
 
 String tokenKey = 'token';
 String tokenHolder = '';
+String jobUsertokenHolder = '';
 
 final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
-
-
-
-
-
 
 // Will use it if neccessary
 
@@ -60,8 +57,6 @@ final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
 //     }
 //   }
 // }
-
-
 
 // UserDataModel? userDataModel;
 // bool isLoaded = false;

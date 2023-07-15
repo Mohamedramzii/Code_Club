@@ -46,7 +46,9 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       builder: (context, child) {
         return BlocProvider<AppCubit>(
-          create: (context) => AppCubit(),
+          create: (context) => AppCubit()
+            ..getUserData()
+            ..getJobs(),
           child: MaterialApp(
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,

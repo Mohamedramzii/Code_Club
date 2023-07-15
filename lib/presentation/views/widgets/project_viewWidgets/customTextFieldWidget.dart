@@ -10,14 +10,14 @@ class CustomTextField extends StatelessWidget {
   }) : super(key: key);
   final int maxlines;
   final bool isDescription;
-   TextEditingController controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: isDescription ? 150.h : 32.h ,
+      height: isDescription ? 150.h : 32.h,
       child: TextField(
         maxLines: maxlines,
-    
+
         // minLines: 8,
         controller: controller,
         onSubmitted: (value) => controller.text = value,

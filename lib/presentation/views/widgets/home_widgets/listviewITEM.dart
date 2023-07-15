@@ -2,17 +2,25 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:job_app/core/app_managers/ImagesManager.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
+import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 
 class ListViewItem extends StatelessWidget {
-  const ListViewItem({super.key});
-
+  const ListViewItem({
+    Key? key,
+    required this.cubit,
+    required this.index,
+  }) : super(key: key);
+  final AppCubit cubit;
+  final int index;
   @override
   Widget build(BuildContext context) {
     double rate = 3.5;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -42,7 +50,7 @@ class ListViewItem extends StatelessWidget {
                 ),
 
                 Text(
-                  '17 days ago',
+                  cubit.jobs[index].createdAt!,
                   style: FontManager.purpletext10.copyWith(color: Colors.grey),
                 ),
                 SizedBox(
@@ -62,11 +70,11 @@ class ListViewItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Design fabric',
+                  cubit.jobs[index].title!,
                   style: FontManager.purpletext10,
                 ),
                 Text(
-                  'Budget \$30 – 250 USD',
+                  cubit.jobs[index].budget!.toString(),
                   style: FontManager.text10,
                 ),
               ],
@@ -90,15 +98,25 @@ class ListViewItem extends StatelessWidget {
           height: 5.h,
         ),
         Text(
-          'I am looking sir someone to help design a Chinoiserie / toile fabric design. Like the top left. Thank you',
+          cubit.jobs[index].description!,
           style: FontManager.text10,
+          textAlign: TextAlign.start,
         ),
         SizedBox(
-          height: 5.h,
+          height: 25.h,
         ),
-        Text(
-            'Graphic Design . Photoshop . Fashion Design . Photoshop . Design . T-Shirts',
-            style: FontManager.purpletext10),
+         Text('Required Skills:',style:FontManager.text10.copyWith(color: ColorsManager.KprimaryColor)),
+        Wrap(
+          children: List.generate(
+            cubit.jobs[index].skills!.split(',').length,
+            (indexx) => Text(
+              '${cubit.jobs[index].skills!.split(',')[indexx].toString()}  ',
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
         SizedBox(
           height: 17.h,
         ),

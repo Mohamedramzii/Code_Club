@@ -19,7 +19,7 @@ class InfoBlockWidget extends StatelessWidget {
     required this.cubit,
   }) : super(key: key);
   final String website;
-  final String phone;
+  final dynamic phone;
   final String email;
   final String joinedat;
   final AppCubit cubit;
@@ -65,7 +65,7 @@ class InfoBlockWidget extends StatelessWidget {
     );
   }
 
-  Row _buildRow(IconData icon, String text, String info, String whatToUpdate,
+  Row _buildRow(IconData icon, String text, dynamic info, String whatToUpdate,
       context, bool isEmail) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,6 +105,7 @@ class InfoBlockWidget extends StatelessWidget {
                                     updateData: controller.text.isEmpty
                                         ? 'Empty Data'
                                         : controller.text);
+                                controller.clear();
                                 Navigator.pop(context);
                               } else {
                                 return;
@@ -133,7 +134,7 @@ class InfoBlockWidget extends StatelessWidget {
           ],
         ),
         Text(
-          info,
+          info.toString(),
           style: FontManager.blacktext12,
         )
       ],

@@ -6,18 +6,19 @@ import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/common_widgets/dialog_widget.dart';
 
 import '../../../view_model/cubit/app_cubit.dart';
-import 'custom_container_widget.dart';
 
 class UserDetailsWidget extends StatelessWidget {
   UserDetailsWidget({
     Key? key,
     required this.name,
     required this.joinedat,
+    required this.slug,
     required this.bio,
     required this.cubit,
   }) : super(key: key);
   final String name;
   final String joinedat;
+  final String slug;
   final String bio;
   final AppCubit cubit;
   // final bool isInUpdateMode;
@@ -29,15 +30,17 @@ class UserDetailsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildRow(
+            isBio: false,
             context: context,
-            text: bio,
+            text: slug,
             textstyle: FontManager.greytext12,
-            whatToUpdate: 'bio'),
+            whatToUpdate: 'slug'),
         _buildRow(
             context: context,
             text: name,
             textstyle: FontManager.blacktext15,
-            whatToUpdate: 'username'),
+            whatToUpdate: 'username',
+            isBio: false),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -59,56 +62,49 @@ class UserDetailsWidget extends StatelessWidget {
         SizedBox(
           height: 21.h,
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     const CustomContainerWidget(
-        //       icon: Icons.person,
-        //       text: 'Follow',
-        //     ),
-        //     SizedBox(
-        //       width: 6.w,
-        //     ),
-        //     const CustomContainerWidget(
-        //       icon: EvaIcons.messageCircleOutline,
-        //       text: 'Message',
-        //     ),
-        //     SizedBox(
-        //       width: 6.w,
-        //     ),
-        //     const CustomContainerWidget(
-        //       icon: EvaIcons.moreHorizontalOutline,
-        //       text: 'More',
-        //     ),
-        //   ],
-        // ),
-        SizedBox(
-          height: 15.h,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32.w),
-          child: Text(
-            'CEO System D, Because your satiffaction is everything & Sttanding out from the rest, and that\'s what we want you to be as well.',
-            style: FontManager.greytext12,
-            textAlign: TextAlign.center,
-          ),
-        )
+        _buildRow(
+            text: bio,
+            textstyle: FontManager.greytext12,
+            whatToUpdate: 'bio',
+            context: context,
+            isBio: true)
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 32.w),
+        //   child: Text(
+        //     bio,
+        //     style: FontManager.greytext12,
+        //     textAlign: TextAlign.center,
+        //   ),
+        // )
       ],
     );
   }
 
   Row _buildRow(
       {required String text,
+      required bool isBio,
       required TextStyle textstyle,
       required String whatToUpdate,
       required context}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          text,
-          style: textstyle,
-        ),
+        isBio == true
+            ? ConstrainedBox(
+                constraints: BoxConstraints(
+                    minWidth: 300.w,
+                    maxWidth: 350.w,
+                    minHeight: 30.h,
+                    maxHeight: 130.h),
+                child: Text(
+                  text,
+                  style: textstyle,
+                  textAlign: TextAlign.center,
+                ))
+            : Text(
+                text,
+                style: textstyle,
+              ),
         GestureDetector(
             onTap: () {
               CustomDialog.ShowDialog(

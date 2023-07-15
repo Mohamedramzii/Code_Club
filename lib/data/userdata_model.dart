@@ -1,43 +1,51 @@
-class UserDataModel {
-  String? bio;
-  String? name;
+class UserdataModel {
+  dynamic bio;
   dynamic website;
   String? joinedAt;
   String? email;
   dynamic phoneNumber;
   dynamic banner;
   dynamic image;
+  String? name;
+  List<dynamic>? skills;
+  String? slug;
 
-  UserDataModel({
+  UserdataModel({
     this.bio,
-    this.name,
     this.website,
     this.joinedAt,
     this.email,
     this.phoneNumber,
     this.banner,
     this.image,
+    this.name,
+    this.skills,
+    this.slug,
   });
 
-  factory UserDataModel.fromJson(Map<String, dynamic> json) => UserDataModel(
-        bio: json['bio'] as String?,
-        name: json['username'] as String?,
+  factory UserdataModel.fromJson(Map<String, dynamic> json) => UserdataModel(
+        bio: json['bio'] as dynamic,
         website: json['website'] as dynamic,
         joinedAt: json['joined_at'] as String?,
         email: json['email'] as String?,
         phoneNumber: json['phoneNumber'] as dynamic,
         banner: json['banner'] as dynamic,
         image: json['image'] as dynamic,
+        name: json['username'] as String?,
+        skills: json['skills'] as List<dynamic>?,
+        slug: json['slug'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
         'bio': bio,
-        'username': name,
         'website': website,
         'joined_at': joinedAt,
         'email': email,
         'phoneNumber': phoneNumber,
         'banner': banner,
         'image': image,
+        'username': name,
+        'skills': skills,
+        'slug': slug,
       };
 }
