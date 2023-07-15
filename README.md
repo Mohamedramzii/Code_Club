@@ -1,16 +1,7 @@
-# job_app
+# Code Club
 
-A new Flutter project.
+#### A job app for developers' job vacancies that enable users to search for jobs and hiring managers to search for suitable candidates, and also publish job announcements.
 
-## Getting Started
+#### With the contribution of a team of a backend developer and a graphic designer.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### This app is implemented using Cubit state management and restful API for all data communication such as Authentication, retrieving job vacancies, posting job announcements, and searching for suitable candidates.
