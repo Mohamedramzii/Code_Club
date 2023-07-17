@@ -8,6 +8,7 @@ import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/common_widgets/customButtonWidget.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
+import 'package:job_app/presentation/views/widgets/project_viewWidgets/category_choices_widget.dart';
 import 'package:job_app/presentation/views/widgets/project_viewWidgets/eachItemWidget.dart';
 
 import '../../core/app_managers/strings.dart';
@@ -93,8 +94,24 @@ class TripView extends StatelessWidget {
                     maxlines: 1,
                   ),
                   SizedBox(
+                    height: 20.h,
+                  ),
+                  JobcategoriesChoicesWidget(
+                    cubit: cubit,
+                    options: const ['Design', 'Programming', 'Management'],
+                    onSelect: (selectedOption) {
+                      print('Selected options: $selectedOption');
+                    },
+                  ),
+                  SizedBox(
                     height: 30.h,
                   ),
+                  // CheckboxListTile(
+                  //   value: cubit.option1,
+                  //   onChanged: (value) {
+                  //     cubit.selectOption(value!);
+                  //   },
+                  // ),
                   GestureDetector(
                     onTap: () {
                       // cubit.pickFile();

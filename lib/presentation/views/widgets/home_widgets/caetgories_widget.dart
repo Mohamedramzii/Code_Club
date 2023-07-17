@@ -11,7 +11,12 @@ class CategoriesIwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> categories = ['All Recent', 'Design', 'Finance', 'Management'];
+    List<String> categories = [
+      'All Recent',
+      'Design',
+      'Programming',
+      'Management',
+    ];
     // int currentIndex = 0;
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {},
@@ -42,33 +47,41 @@ class CategoriesIwidget extends StatelessWidget {
                     ))
               ],
             ),
-            Wrap(
-              direction: Axis.horizontal,
-              children: List.generate(
-                4,
-                (index) => GestureDetector(
-                  onTap: () {
-                    cubit.changeCategoriesIndex(index);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 4.3.w),
-                    child: Chip(
-                      backgroundColor: cubit.categoryCurrentIndex == index
-                          ? ColorsManager.KprimaryColor
-                          : Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.r)),
-                      label: Text(
-                        categories[index],
-                        style: FontManager.purpletext10.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: cubit.categoryCurrentIndex == index
-                                ? Colors.white
-                                : Colors.grey),
+            SizedBox(
+              height: 40.h,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: categories.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      cubit.changeCategoriesIndex(index);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 4.3.w),
+                      child: Chip(
+                        backgroundColor: cubit.categoryCurrentIndex == index
+                            ? ColorsManager.KprimaryColor
+                            : Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.r)),
+                        label: ConstrainedBox(
+                          constraints:
+                              BoxConstraints(minWidth: 40.w, maxWidth: 90.w),
+                          child: Text(
+                            categories[index],
+                            style: FontManager.purpletext10.copyWith(
+                                fontWeight: FontWeight.w900,
+                                color: cubit.categoryCurrentIndex == index
+                                    ? Colors.white
+                                    : Colors.grey),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             )
           ],

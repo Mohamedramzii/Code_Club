@@ -157,6 +157,12 @@ class GetJobDataFailureState extends AppState {
   });
 }
 
-
 //Number Navigator state
-class ChangeNumberNavigatorSucessState extends AppState{}
+class ChangeNumberNavigatorSucessState extends AppState {}
+
+//Categories Choices for job
+class CategoryChoicIsTrueeSucessState extends AppState {}
+
+class CategoryChoicIsFalseSucessState extends AppState {}
+
+class IsClickedToChooseCategorySucessState extends AppState {}

@@ -19,6 +19,23 @@ class ListViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double rate = 3.5;
+
+    String date = cubit.jobs[index].createdAt.toString();
+
+    List<String> dateParts = date.split('-');
+    int year = int.parse(dateParts[0]);
+    int month = int.parse(dateParts[1]);
+    int day = int.parse(dateParts[2]);
+
+    DateTime startDate = DateTime(year, month, day);
+    DateTime endDate = DateTime.now();
+
+    Duration finalDate = endDate.difference(startDate);
+    int days = finalDate.inDays;
+    int hours = finalDate.inHours % 24;
+    int minutes = finalDate.inMinutes % 60;
+    int seconds = finalDate.inSeconds % 60;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,7 +55,7 @@ class ListViewItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Freelancer Onboarding',
+                  cubit.jobs[index].user!.username!,
                   style: FontManager.purpletext10.copyWith(color: Colors.grey),
                 ),
                 // SizedBox(
@@ -50,7 +67,7 @@ class ListViewItem extends StatelessWidget {
                 ),
 
                 Text(
-                  cubit.jobs[index].createdAt!,
+                  '${days.toString()} day(s) ago',
                   style: FontManager.purpletext10.copyWith(color: Colors.grey),
                 ),
                 SizedBox(
@@ -74,7 +91,7 @@ class ListViewItem extends StatelessWidget {
                   style: FontManager.purpletext10,
                 ),
                 Text(
-                  cubit.jobs[index].budget!.toString(),
+                  'Budget \$${cubit.jobs[index].budget.toString()} USD',
                   style: FontManager.text10,
                 ),
               ],
@@ -98,28 +115,40 @@ class ListViewItem extends StatelessWidget {
           height: 5.h,
         ),
         Text(
-          cubit.jobs[index].description!,
+          cubit.jobs[index].description ?? '',
           style: FontManager.text10,
           textAlign: TextAlign.start,
         ),
         SizedBox(
           height: 25.h,
         ),
-         Text('Required Skills:',style:FontManager.text10.copyWith(color: ColorsManager.KprimaryColor)),
-        Wrap(
-          children: List.generate(
-            cubit.jobs[index].skills!.split(',').length,
-            (indexx) => Text(
-              '${cubit.jobs[index].skills!.split(',')[indexx].toString()}  ',
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 17.h,
-        ),
+        Text('Required Skills:',
+            style: FontManager.text10
+                .copyWith(color: ColorsManager.KprimaryColor)),
+
+        Text(cubit.jobs[index].skills.toString())
+        // Wrap(
+        //   children: List.generate(
+        //     cubit.jobs[index].skills!.split(',').length ?? 0,
+        //     (indexx) {
+        //       var item = cubit.jobs[index].skills!.split(',');
+        //       return Text(
+        //         item.last == item[indexx].toString()
+        //             ? item[indexx].toString()
+        //             : '${item[indexx].toString()} • ',
+        //         style: FontManager.greytext15
+        //             .copyWith(color: ColorsManager.KprimaryColor),
+        //         overflow: TextOverflow.ellipsis,
+        //         softWrap: true,
+        //         textAlign: TextAlign.center,
+        //       );
+        //     },
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 17.h,
+        // ),
+       , 
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

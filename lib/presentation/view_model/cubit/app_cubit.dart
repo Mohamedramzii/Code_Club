@@ -7,7 +7,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/network/dio_helper.dart';
-import 'package:job_app/data/jobdetails_model/jobdetails_model.dart';
 import 'package:job_app/data/register_model2/register_model2.dart';
 import 'package:job_app/presentation/views/home_view.dart';
 import 'package:job_app/presentation/views/trip_view.dart';
@@ -15,6 +14,7 @@ import 'package:meta/meta.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../../core/helpers/local/cache_helper.dart';
+import '../../../data/job_details_model/result.dart';
 import '../../../data/login_model/login_model.dart';
 import '../../../data/userdata_model.dart';
 import '../../views/ProfileView.dart';
@@ -259,15 +259,24 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  List<JobdetailsModel> jobs = [];
+  String? category = 'design';
+  int page = 1;
+
+  List<Result> jobs = [];
+
   getJobs() {
     emit(GetJobDataLoadingState());
 
     if (jobs.isEmpty) {
-      DioHelper.getData(url: EndPoints.job, token: 'Token $tokenHolder')
+      DioHelper.getData(
+              url:
+                  'https://codeclub.pythonanywhere.com/job/?page=1&category=design',
+              token: 'Token $tokenHolder')
           .then((value) {
-        for (var job in value.data) {
-          jobs.add(JobdetailsModel.fromJson(job));
+        print(value.data);
+        // resultModel=Result.fromJson(value.data);
+        for (var item in value.data['results']) {
+          jobs.add(Result.fromJson(item));
         }
         debugPrint('Get Jobs : Success');
         emit(GetJobDataSuccessState());
@@ -283,6 +292,25 @@ class AppCubit extends Cubit<AppState> {
 
   changePage(index) {
     currentPage = index + 1;
-    emit(NavBarSuccessState());
+    emit(ChangeNumberNavigatorSucessState());
+  }
+
+  List<String> selectedOptions = [];
+  bool? option1 = false;
+  selectedOptionsChoices(bool value, String option) {
+    if (selectedOptions.contains(option)) {
+      selectedOptions.remove(option);
+      emit(CategoryChoicIsFalseSucessState());
+    } else {
+      selectedOptions.add(option);
+      emit(CategoryChoicIsTrueeSucessState());
+    }
+  }
+
+  bool? isClickedToChooseCategory = false;
+
+  ClickedToChooseCategory() {
+    isClickedToChooseCategory = !isClickedToChooseCategory!;
+    emit(IsClickedToChooseCategorySucessState());
   }
 }
