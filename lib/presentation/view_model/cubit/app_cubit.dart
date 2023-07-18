@@ -125,7 +125,7 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  //nav bar
+  //! nav bar
   List<Widget> screens = [
     const HomeView(),
     TripView(),
@@ -134,16 +134,18 @@ class AppCubit extends Cubit<AppState> {
   ];
 
   int currentIndex = 0;
-
   changeNavBar(int index) {
     currentIndex = index;
 
     emit(NavBarSuccessState());
   }
 
-  int categoryCurrentIndex = 0;
+//! home view, categories index change
+  int categoryCurrentIndex = 0; // will be used in getjobs method as category
+
   changeCategoriesIndex(index) {
     categoryCurrentIndex = index;
+    debugPrint('index: $categoryCurrentIndex');
     emit(CategoriesIndexChangeSuccessState());
   }
 
@@ -167,6 +169,7 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+//! updateUserData
   updateUserData(
       {required String dataToChange,
       required dynamic updateData,
@@ -229,6 +232,7 @@ class AppCubit extends Cubit<AppState> {
     OpenFile.open(platformfile.path);
   }
 
+//! Post a job
   postJobData({
     required String title,
     required dynamic skills,
@@ -259,42 +263,78 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  String? category = 'design';
+//! Get Jobs
+  String? category = '';
   int page = 1;
 
+  String getCategoryFromIndex() {
+    String category = '';
+    switch (categoryCurrentIndex) {
+      case 0:
+        category = 'All Recent';
+        break;
+      case 1:
+        category = 'design';
+        break;
+      case 2:
+        category = 'programming';
+        break;
+      case 3:
+        category = 'management';
+        break;
+      default:
+        print('Unknown weather condition.');
+    }
+    return category;
+  }
+
   List<Result> jobs = [];
-
-  getJobs() {
+  String pageErrorFlag = '';
+  getJobs() async {
     emit(GetJobDataLoadingState());
+    String selectedCategory = getCategoryFromIndex();
+    jobs = [];
+    try {
+      if (jobs.isEmpty) {
+        Response response = await DioHelper.getData(
+            url:
+                'https://codeclub.pythonanywhere.com/job/?page=$currentPage&category=$selectedCategory',
+            token: 'Token $tokenHolder');
 
-    if (jobs.isEmpty) {
-      DioHelper.getData(
-              url:
-                  'https://codeclub.pythonanywhere.com/job/?page=1&category=design',
-              token: 'Token $tokenHolder')
-          .then((value) {
-        print(value.data);
+        print(response.data);
         // resultModel=Result.fromJson(value.data);
-        for (var item in value.data['results']) {
+        for (var item in response.data['results']) {
           jobs.add(Result.fromJson(item));
         }
         debugPrint('Get Jobs : Success');
         emit(GetJobDataSuccessState());
-      }).catchError((e) {
-        debugPrint('Get Jobs Error : ${e.toString()} }');
-        emit(GetJobDataFailureState(errMessage: e.toString()));
-      });
+      }
+    } on DioError catch (e) {
+      debugPrint('Get Jobs Error : ${e.response!.data['details']}');
+      if (e.response!.data['details'] == "Invalid page.") {
+        pageErrorFlag = e.response!.data['details'];
+      }
+      emit(GetJobDataFailureState(errMessage: pageErrorFlag.toString()));
     }
   }
 
+//! Number Navigator
   final int numberofPages = 20;
-  int? currentPage = 0;
+  int? currentPage = 1;
 
   changePage(index) {
     currentPage = index + 1;
     emit(ChangeNumberNavigatorSucessState());
   }
 
+//! In job upload, when user clicks on job category
+  bool? isClickedToChooseCategory = false;
+  ClickedToChooseCategory() {
+    isClickedToChooseCategory = !isClickedToChooseCategory!;
+    emit(IsClickedToChooseCategorySucessState());
+  }
+
+  //! In Job upload, skills field
   List<String> selectedOptions = [];
   bool? option1 = false;
   selectedOptionsChoices(bool value, String option) {
@@ -305,12 +345,5 @@ class AppCubit extends Cubit<AppState> {
       selectedOptions.add(option);
       emit(CategoryChoicIsTrueeSucessState());
     }
-  }
-
-  bool? isClickedToChooseCategory = false;
-
-  ClickedToChooseCategory() {
-    isClickedToChooseCategory = !isClickedToChooseCategory!;
-    emit(IsClickedToChooseCategorySucessState());
   }
 }

@@ -57,6 +57,7 @@ class CategoriesIwidget extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       cubit.changeCategoriesIndex(index);
+                      cubit.getJobs();
                     },
                     child: Padding(
                       padding: EdgeInsets.only(right: 4.3.w),

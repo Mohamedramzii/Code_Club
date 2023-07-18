@@ -167,8 +167,8 @@ class TripView extends StatelessWidget {
                               color: ColorsManager.KprimaryColor,
                               textcolor: Colors.white,
                               onpressed: () {
-                                List<String> skillsSplit =
-                                    controller2.text.split(',');
+                                // List<String> skillsSplit =
+                                //     controller2.text.split(',');
                                 if (controller1.text.isNotEmpty &&
                                     controller2.text.isNotEmpty &&
                                     controller3.text.isNotEmpty &&
@@ -176,7 +176,7 @@ class TripView extends StatelessWidget {
                                     controller5.text.isNotEmpty) {
                                   cubit.postJobData(
                                       title: controller1.text,
-                                      skills: skillsSplit,
+                                      skills: controller2.text,
                                       description: controller3.text,
                                       budget: int.parse(controller4.text),
                                       time: controller5.text);

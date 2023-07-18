@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/local/cache_helper.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
@@ -36,20 +37,30 @@ class HomeView extends StatelessWidget {
                 height: 20.h,
               ),
               const CategoriesIwidget(),
+
               if (state is GetJobDataLoadingState) const Spacer(),
-              Flexible(
-                // flex: 50,
-                child: state is GetJobDataLoadingState
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView.separated(
-                        itemBuilder: (context, index) {
-                          return ListViewItem(cubit: cubit, index: index);
-                        },
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: cubit.jobs.length),
-              ),
+              state is GetJobDataFailureState
+                  ? Expanded(
+                      child: Center(
+                          child: Text(
+                        'No Data Here',
+                        style: FontManager.text25,
+                      )),
+                    )
+                  : Flexible(
+                      // flex: 50,
+                      child: state is GetJobDataLoadingState
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.separated(
+                              itemBuilder: (context, index) {
+                                return ListViewItem(cubit: cubit, index: index);
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const Divider(),
+                              itemCount: cubit.jobs.length),
+                    ),
 
               // SizedBox(height: 5.h,),
               Padding(
@@ -59,6 +70,7 @@ class HomeView extends StatelessWidget {
                     initialPage: 0,
                     onPageChange: (index) {
                       cubit.changePage(index);
+                      cubit.getJobs();
                       print(cubit.currentPage);
                     },
                   ))
