@@ -3,8 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:job_app/core/app_managers/colors.dart';
+import 'package:job_app/core/common_widgets/customButtonWidget.dart';
+import 'package:job_app/core/constants.dart';
+import 'package:job_app/core/helpers/local/cache_helper.dart';
+import 'package:job_app/presentation/views/auth/login_view.dart';
 import 'package:job_app/presentation/views/widgets/profile_widgets/divider.dart';
 import 'package:job_app/presentation/views/widgets/profile_widgets/infoBlock_widget.dart';
+import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../view_model/cubit/app_cubit.dart';
 import 'widgets/profile_widgets/cover&profile_images_widget.dart';
@@ -16,6 +23,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    tokenHolder=CacheHelper.getData(key: tokenKey);
     return Scaffold(
       body: BlocProvider(
         create: (context) => AppCubit()..getUserData(),
@@ -24,6 +32,13 @@ class ProfileView extends StatelessWidget {
             AppCubit cubit = BlocProvider.of<AppCubit>(context);
             if (state is UpdateUserDataSuccessState) {
               await cubit.getUserData();
+            }
+            if (state is LogoutSuccessState) {
+              Navigator.pushReplacement(
+                  context,
+                  PageAnimationTransition(
+                      page: LoginView(),
+                      pageAnimationType: BottomToTopTransition()));
             }
           },
           builder: (context, state) {
@@ -76,6 +91,24 @@ class ProfileView extends StatelessWidget {
                       ),
                       SkillsBlockWidget(
                         cubit: cubit,
+                      ),
+                      const CustomDivider(),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 70.h,
+                          child: CustomButton(
+                            text: 'Logout',
+                            color: ColorsManager.KprimaryColor,
+                            onpressed: () {
+                              cubit.logout();
+                            },
+                            textcolor: Colors.white,
+                          ),
+                        ),
                       )
                     ],
                   ),

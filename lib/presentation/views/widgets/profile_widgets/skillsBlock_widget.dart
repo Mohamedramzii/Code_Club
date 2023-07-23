@@ -38,6 +38,14 @@ class _SkillsBlockWidgetState extends State<SkillsBlockWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+            'Skills',
+            style: FontManager.blacktext15
+                .copyWith(color: ColorsManager.KprimaryColor),
+          ),
+          SizedBox(
+            height: 17.h,
+          ),
                 SearchBarAnimation(
                   textEditingController: widget.controller,
                   isOriginalAnimation: true,
@@ -81,7 +89,7 @@ class _SkillsBlockWidgetState extends State<SkillsBlockWidget> {
                   },
                   onEditingComplete: () {},
                 ),
-                widget.cubit.userDataModel!.skills!.isEmpty
+                widget.cubit.userDataModel!.skills== null
                     ? const Center(child: Text('No skills yet'))
                     : Wrap(
                         alignment: WrapAlignment.start,

@@ -25,6 +25,7 @@ class TripView extends StatelessWidget {
   static TextEditingController controller5 = TextEditingController();
 
   List<String> skills = [];
+  String selectedCategory = '';
 
   @override
   Widget build(BuildContext context) {
@@ -101,17 +102,15 @@ class TripView extends StatelessWidget {
                     options: const ['Design', 'Programming', 'Management'],
                     onSelect: (selectedOption) {
                       print('Selected options: $selectedOption');
+                      selectedCategory = selectedOption.isEmpty
+                          ? 'programming'
+                          : selectedOption[0].toLowerCase();
+                      print('Selected category: $selectedCategory');
                     },
                   ),
                   SizedBox(
                     height: 30.h,
                   ),
-                  // CheckboxListTile(
-                  //   value: cubit.option1,
-                  //   onChanged: (value) {
-                  //     cubit.selectOption(value!);
-                  //   },
-                  // ),
                   GestureDetector(
                     onTap: () {
                       // cubit.pickFile();
@@ -179,7 +178,8 @@ class TripView extends StatelessWidget {
                                       skills: controller2.text,
                                       description: controller3.text,
                                       budget: int.parse(controller4.text),
-                                      time: controller5.text);
+                                      time: controller5.text,
+                                      category: selectedCategory);
 
                                   controller1.clear();
                                   controller2.clear();

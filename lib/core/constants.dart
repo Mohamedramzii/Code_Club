@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
 abstract class EndPoints {
   static const LOGIN = 'login/';
   static const REGISTER = 'register/';
@@ -15,6 +17,50 @@ String tokenHolder = '';
 String jobUsertokenHolder = '';
 
 final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
+const jsonString = '''
+    {
+      "AD": {
+        "name": "Andorra",
+        "flag": "https://www.countryflags.io/ad/flat/64.png"
+      },
+      "AE": {
+        "name": "United Arab Emirates",
+        "flag": "https://www.countryflags.io/ae/flat/64.png"
+      },
+      "AF": {
+        "name": "Afghanistan",
+        "flag": "https://www.countryflags.io/af/flat/64.png"
+      },
+      "EG": {
+        "name": "Egypt",
+        "flag": "https://www.countryflags.io/eg/flat/64.png"
+      }
+    }''';
+final countryData = jsonDecode(jsonString);
+final countryName =
+    'Egypt'; // Replace with the country name you want to search for
+final flagUrl = getFlagUrl(countryData, countryName);
+
+String getFlagUrl(Map<String, dynamic> countryData, String countryName) {
+  for (final entry in countryData.entries) {
+    if (entry.value['name'] == countryName) {
+      return entry.value['flag'];
+    }
+  }
+
+  return 'Country Not Found'; // Country not found
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // Will use it if neccessary
 

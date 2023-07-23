@@ -7,6 +7,12 @@ import 'package:job_app/core/app_managers/ImagesManager.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
+import 'package:job_app/presentation/views/job_info_view.dart';
+import 'package:job_app/presentation/views/widgets/home_widgets/ListViewItem_widgets/listview_jobOwner_info.dart';
+import 'package:page_animation_transition/animations/right_to_left_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
+
+import 'ListViewItem_widgets/job_details_widget.dart';
 
 class ListViewItem extends StatelessWidget {
   const ListViewItem({
@@ -33,193 +39,130 @@ class ListViewItem extends StatelessWidget {
 
     Duration finalDate = endDate.difference(startDate);
     int days = finalDate.inDays;
-    int hours = finalDate.inHours % 24;
-    int minutes = finalDate.inMinutes % 60;
-    int seconds = finalDate.inSeconds % 60;
+    // int hours = finalDate.inHours % 24;
+    // int minutes = finalDate.inMinutes % 60;
+    // int seconds = finalDate.inSeconds % 60;
 //------------------ End Of Date Conversion -------------------------------
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            // !User Image
-            Container(
-              width: 44.w,
-              height: 45.h,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
-              child: Image.asset(ImagesManager.userimage),
-            ),
-            SizedBox(
-              width: 5.w,
-            ),
-            //!User Info
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  cubit.jobs[index].user!.username!,
-                  style: FontManager.purpletext10.copyWith(color: Colors.grey),
-                ),
-                // SizedBox(
-                //   height: 5.h,
-                // ),
-                Text(
-                  '@${cubit.jobs[index].user!.slug!}',
-                  style: FontManager.purpletext10.copyWith(color: Colors.grey),
-                ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            PageAnimationTransition(
+                page: JobInfoView(cubit:cubit, index: index,),
+                pageAnimationType: RightToLeftTransition()));
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          JobOwnerInfoWidget(cubit: cubit, index: index, days: days),
+          SizedBox(
+            height: 10.h,
+          ),
+          // !Job details
+          JobDetailsWidget(cubit: cubit, index: index),
+          SizedBox(
+            height: 5.h,
+          ),
+          //!Job Description
+          Text(
+            cubit.jobs[index].description ?? '',
+            style: FontManager.text10,
+            textAlign: TextAlign.start,
+          ),
+          SizedBox(
+            height: 25.h,
+          ),
 
-                Text(
-                  '${days.toString()} day(s) ago',
-                  style: FontManager.purpletext10.copyWith(color: Colors.grey),
+          //!Job skills
+          Text('Required Skills:',
+              style: FontManager.text10
+                  .copyWith(color: ColorsManager.KprimaryColor)),
+          cubit.jobs[index].skills.toString() == 'null'
+              ? Text(
+                  'No Skills Required for this job',
+                  style: FontManager.blacktext12,
+                )
+              : Wrap(
+                  children: List.generate(
+                    cubit.jobs[index].skills!.split(',').length,
+                    (indexx) {
+                      List<String> item = cubit.jobs[index].skills!.split(',');
+                      return Text(
+                        item.last == item[indexx].toString()
+                            ? item[indexx].toString()
+                            : '${item[indexx].toString()} • ',
+                        style: FontManager.greytext15
+                            .copyWith(color: ColorsManager.KprimaryColor),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
                 ),
-                SizedBox(
-                  height: 5.h,
-                ),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        // !Job details
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //!Job Title
-                Text(
-                  cubit.jobs[index].title!,
-                  style: FontManager.purpletext10,
-                ),
-                //!Job Budget
-                Text(
-                  'Budget \$${cubit.jobs[index].budget.toString()} USD',
-                  style: FontManager.text10,
-                ),
-              ],
-            ),
-            //!Job Average Bid
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '\$78 USD',
-                  style: FontManager.text10,
-                ),
-                Text(
-                  'average bid',
-                  style: FontManager.text10.copyWith(fontSize: 5.sp),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 5.h,
-        ),
-        //!Job Description
-        Text(
-          cubit.jobs[index].description ?? '',
-          style: FontManager.text10,
-          textAlign: TextAlign.start,
-        ),
-        SizedBox(
-          height: 25.h,
-        ),
+          SizedBox(
+            height: 17.h,
+          ),
 
-        //!Job skills
-        Text('Required Skills:',
-            style: FontManager.text10
-                .copyWith(color: ColorsManager.KprimaryColor)),
-        cubit.jobs[index].skills.toString() == 'null'
-            ? Text(
-                'No Skills Required for this job',
-                style: FontManager.blacktext12,
+          //!Job Time
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                '$days days ago',
+                style: FontManager.text10,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  EvaIcons.bookmark,
+                  color: Colors.grey,
+                ),
+                padding: EdgeInsets.zero,
               )
-            : Wrap(
-                children: List.generate(
-                  cubit.jobs[index].skills!.split(',').length,
-                  (indexx) {
-                    List<String> item = cubit.jobs[index].skills!.split(',');
-                    return Text(
-                      item.last == item[indexx].toString()
-                          ? item[indexx].toString()
-                          : '${item[indexx].toString()} • ',
-                      style: FontManager.greytext15
-                          .copyWith(color: ColorsManager.KprimaryColor),
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                    );
-                  },
+            ],
+          ),
+          //! Job rate
+          Row(
+            children: [
+              RatingBar.builder(
+                initialRating: rate,
+                ignoreGestures: true,
+                itemSize: 25.r,
+                minRating: 0,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: ColorsManager.KprimaryColor,
                 ),
+                onRatingUpdate: (rating) {
+                  // print(rating);
+                },
               ),
-        SizedBox(
-          height: 17.h,
-        ),
-
-        //!Job Time
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              '$hours Hours ago',
-              style: FontManager.text10,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                EvaIcons.bookmark,
-                color: Colors.grey,
+              Text(
+                '$rate',
+                style: FontManager.text10,
+                textAlign: TextAlign.end,
               ),
-              padding: EdgeInsets.zero,
-            )
-          ],
-        ),
-        //! Job rate
-        Row(
-          children: [
-            RatingBar.builder(
-              initialRating: rate,
-              ignoreGestures: true,
-              itemSize: 25.r,
-              minRating: 0,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: ColorsManager.KprimaryColor,
+              SizedBox(
+                width: 10.w,
               ),
-              onRatingUpdate: (rating) {
-                // print(rating);
-              },
-            ),
-            Text(
-              '$rate',
-              style: FontManager.text10,
-              textAlign: TextAlign.end,
-            ),
-            SizedBox(
-              width: 10.w,
-            ),
-            Image.asset(ImagesManager.comment),
-            SizedBox(
-              width: 5.w,
-            ),
-            Text(
-              '5',
-              style: FontManager.text10,
-              textAlign: TextAlign.end,
-            ),
-          ],
-        ),
-      ],
+              Image.asset(ImagesManager.comment),
+              SizedBox(
+                width: 5.w,
+              ),
+              Text(
+                '5',
+                style: FontManager.text10,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

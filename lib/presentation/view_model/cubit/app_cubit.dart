@@ -47,6 +47,7 @@ class AppCubit extends Cubit<AppState> {
       debugPrint(registerModel!.message);
       CacheHelper.saveData(key: tokenKey, value: registerModel!.token);
       // tokenHolder = registerModel!.token;
+      currentIndex = 0;
       emit(RegisterSuccessState());
     }).catchError((e) {
       debugPrint('Register Error: ${e.toString()}');
@@ -71,7 +72,7 @@ class AppCubit extends Cubit<AppState> {
       CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
       // var userData = jsonEncode(loginModel);
       // CacheHelper.saveData(key: 'User', value: userData);
-
+      currentIndex = 0;
       emit(LoginSuccessState());
     } on DioError catch (e) {
       if (e.response != null) {
@@ -85,8 +86,8 @@ class AppCubit extends Cubit<AppState> {
 
   logout() {
     emit(LogoutLoadingState());
-    CacheHelper.clearData(key: tokenKey);
     currentIndex = 0;
+    CacheHelper.clearData(key: tokenKey);
     emit(LogoutSuccessState());
   }
 
@@ -158,7 +159,7 @@ class AppCubit extends Cubit<AppState> {
           url: EndPoints.UPDATEUSERDATA, token: 'Token $tokenHolder');
       userDataModel = UserdataModel.fromJson(response.data);
       // userDataModel.skills!.add('dev');
-      skills = userDataModel!.skills!;
+      skills = userDataModel!.skills ?? [];
       print(userDataModel!.skills);
       emit(GetUserDataSuccessState());
     } on DioError catch (e) {
@@ -239,6 +240,7 @@ class AppCubit extends Cubit<AppState> {
     required String description,
     required int budget,
     required String time,
+    required String category,
   }) async {
     emit(PostJobDataLoadingState());
 
@@ -251,6 +253,7 @@ class AppCubit extends Cubit<AppState> {
           "description": description,
           "budget": budget,
           "time": time,
+          "category":category
         },
         token: 'Token $tokenHolder',
       );
@@ -271,7 +274,8 @@ class AppCubit extends Cubit<AppState> {
     String category = '';
     switch (categoryCurrentIndex) {
       case 0:
-        category = 'All Recent';
+        // category = 'All Recent';
+        category = 'design';
         break;
       case 1:
         category = 'design';
@@ -283,7 +287,7 @@ class AppCubit extends Cubit<AppState> {
         category = 'management';
         break;
       default:
-        print('Unknown weather condition.');
+        print('Unknown Category.');
     }
     return category;
   }
@@ -301,7 +305,7 @@ class AppCubit extends Cubit<AppState> {
                 'https://codeclub.pythonanywhere.com/job/?page=$currentPage&category=$selectedCategory',
             token: 'Token $tokenHolder');
 
-        print(response.data);
+        // print(response.data);
         // resultModel=Result.fromJson(value.data);
         for (var item in response.data['results']) {
           jobs.add(Result.fromJson(item));

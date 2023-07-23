@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
-import 'package:job_app/presentation/views/ProfileView.dart';
+import 'package:job_app/presentation/views/App_layout.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
@@ -44,8 +44,8 @@ class RegisterView extends StatelessWidget {
       body: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {
           if (state is RegisterSuccessState) {
-            Navigator.of(context).push(PageAnimationTransition(
-                page: const ProfileView(),
+            Navigator.of(context).pushReplacement(PageAnimationTransition(
+                page: const AppLayout(),
                 pageAnimationType: BottomToTopTransition()));
           }
         },
