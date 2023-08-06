@@ -13,8 +13,10 @@ abstract class EndPoints {
 }
 
 String tokenKey = 'token';
+String themeKey = 'isDark';
 String tokenHolder = '';
-String jobUsertokenHolder = '';
+bool? changedToDark;
+// String jobUsertokenHolder = '';
 
 final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
 const jsonString = '''

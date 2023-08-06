@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/local/cache_helper.dart';
@@ -19,7 +20,9 @@ class HomeView extends StatelessWidget {
     // BlocProvider.of<AppCubit>(context).getUserData();
     tokenHolder = CacheHelper.getData(key: tokenKey);
     return BlocProvider(
-      create: (context) => AppCubit()..getUserData()..getJobs(),
+      create: (context) => AppCubit()
+        ..getUserData()
+        ..getJobs(),
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -70,6 +73,11 @@ class HomeView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 25.h),
                     child: NumberPaginator(
                       numberPages: cubit.numberofPages,
+                      // config: NumberPaginatorUIConfig(
+                      //   // buttonSelectedBackgroundColor:
+                      //       // ColorsManager.KprimaryColor,
+
+                      // ),
                       initialPage: 0,
                       onPageChange: (index) {
                         cubit.changePage(index);

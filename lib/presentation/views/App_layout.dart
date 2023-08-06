@@ -16,7 +16,7 @@ class AppLayout extends StatelessWidget {
         return Scaffold(
           body: cubit.screens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: Colors.white,
+              // backgroundColor: Colors.white,
               // elevation: 0.0,
               selectedLabelStyle: FontManager.greytext12,
               iconSize: 30,

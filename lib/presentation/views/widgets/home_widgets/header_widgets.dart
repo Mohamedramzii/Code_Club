@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,9 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
+import 'package:job_app/presentation/view_model/cubit/settings_cubit.dart';
 import 'package:job_app/presentation/views/auth/login_view.dart';
 
 import '../../../../core/app_managers/ImagesManager.dart';
+import '../../../../core/constants.dart';
+import '../../../../core/helpers/local/cache_helper.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
@@ -55,16 +59,22 @@ class HeaderWidget extends StatelessWidget {
             )
           ],
         ),
-        Container(
-          width: 35.w,
-          height: 35.h,
-          decoration: BoxDecoration(
-              color: Colors.grey.shade200, shape: BoxShape.circle),
-          child: Icon(
-            Icons.mail_rounded,
-            color: ColorsManager.KprimaryColor,
-          ),
-        )
+        BlocBuilder<SettingsCubit, SettingsState>(builder: (context, _) {
+          var cubit=BlocProvider.of<SettingsCubit>(context);
+          return IconButton(onPressed: () {
+            cubit.chanegTheme();
+          }, icon: Icon(CacheHelper.getData(key: themeKey) ? Icons.light_mode: Icons.dark_mode));
+        })
+        // Container(
+        //   width: 35.w,
+        //   height: 35.h,
+        //   decoration: BoxDecoration(
+        //       color: Colors.grey.shade200, shape: BoxShape.circle),
+        //   child: Icon(
+        //     Icons.mail_rounded,
+        //     color: ColorsManager.KprimaryColor,
+        //   ),
+        // )
       ],
     );
   }

@@ -7,6 +7,7 @@ import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/common_widgets/customButtonWidget.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/local/cache_helper.dart';
+import 'package:job_app/presentation/view_model/cubit/settings_cubit.dart';
 import 'package:job_app/presentation/views/auth/login_view.dart';
 import 'package:job_app/presentation/views/widgets/profile_widgets/divider.dart';
 import 'package:job_app/presentation/views/widgets/profile_widgets/infoBlock_widget.dart';
@@ -44,6 +45,7 @@ class ProfileView extends StatelessWidget {
           builder: (context, state) {
             if (state is GetUserDataSuccessState) {
               AppCubit cubit = BlocProvider.of<AppCubit>(context);
+              SettingsCubit cubit2 =  BlocProvider.of<SettingsCubit>(context);
 
               return SingleChildScrollView(
                 child: SafeArea(
@@ -109,7 +111,26 @@ class ProfileView extends StatelessWidget {
                             textcolor: Colors.white,
                           ),
                         ),
-                      )
+                      ),
+                      // BlocBuilder<SettingsCubit,SettingsState>(
+                      //   builder: (context,_) {
+                      //     return Text(cubit2.isDark== true ? 'Dark': 'Light');
+                      //   }
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: SizedBox(
+                      //     height: 70.h,
+                      //     child: CustomButton(
+                      //       text: 'Change Theme',
+                      //       color: ColorsManager.KprimaryColor,
+                      //       onpressed: () {
+                      //         cubit2.chanegTheme();
+                      //       },
+                      //       textcolor: Colors.white,
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

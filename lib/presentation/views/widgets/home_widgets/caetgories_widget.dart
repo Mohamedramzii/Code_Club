@@ -32,8 +32,10 @@ class CategoriesIwidget extends StatelessWidget {
                         color: ColorsManager.KprimaryColor,
                         fontWeight: FontWeight.bold)),
                 IconButton(
+                  padding: EdgeInsets.zero,
                     onPressed: () {},
                     icon: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'See All',
@@ -42,9 +44,10 @@ class CategoriesIwidget extends StatelessWidget {
                         const Icon(
                           EvaIcons.arrowIosForward,
                           size: 20,
-                        )
+                        ),
                       ],
-                    ))
+                    )),
+                // SizedBox(width: 10.w)
               ],
             ),
             SizedBox(
