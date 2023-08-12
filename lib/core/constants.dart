@@ -14,8 +14,10 @@ abstract class EndPoints {
 
 String tokenKey = 'token';
 String themeKey = 'isDark';
+String langKey = 'isEn';
 String tokenHolder = '';
-bool? changedToDark;
+var theme;
+// bool? changedToDark=false;
 // String jobUsertokenHolder = '';
 
 final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');

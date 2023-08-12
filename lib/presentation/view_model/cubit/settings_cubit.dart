@@ -12,19 +12,38 @@ class SettingsCubit extends Cubit<SettingsState> {
   bool _isDark = false;
   bool get isDark => _isDark;
 
-   chanegTheme() {
+  chanegTheme() async {
     _isDark = !_isDark;
-    CacheHelper.saveData(key: themeKey, value: isDark);
-    // print(isDark);
+
+    print(isDark);
     emit(ThemeChanged());
+    await CacheHelper.saveData(key: themeKey, value: isDark);
     // return _isDark;
   }
 
-  // ThemeMode _themeMode = ThemeMode.light;
-  // get themeMode => _themeMode;
+  bool currentTheme() {
+    return _isDark = CacheHelper.getData(key: themeKey);
+  }
 
-  // toggleTheme(bool isDark) {
-  //   _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-  //   emit(ThemeChanged());
-  // }
+  // bool currentTheme = false;
+  void switchThemeToggle(bool value) async {
+    _isDark = value;
+    // _isDark = !_isDark;
+
+    print('**-*--*-*-*-*-* isDark $isDark');
+    emit(SwitchToggleSuccessState());
+    await CacheHelper.saveData(key: themeKey, value: isDark);
+  }
+
+  bool isEn = false;
+  void switchLanguageToggle(bool value) async {
+    isEn = value;
+    print('*-*-*-*-* isEn $isEn');
+    emit(SwitchToggleLanguageSuccessState());
+    await CacheHelper.saveData(key: langKey, value: isEn);
+  }
+
+  bool currentLanguage() {
+    return isEn = CacheHelper.getData(key: langKey) ?? false;
+  }
 }

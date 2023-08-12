@@ -6,6 +6,7 @@ import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 
 import '../../../../core/app_managers/colors.dart';
 import '../../../../core/app_managers/fonts.dart';
+import '../../../../generated/l10n.dart';
 
 class JobcategoriesChoicesWidget extends StatelessWidget {
   JobcategoriesChoicesWidget({
@@ -26,7 +27,7 @@ class JobcategoriesChoicesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Job category',
+          S.of(context).Job_category,
           style: FontManager.blacktext12,
         ),
         GestureDetector(
@@ -44,36 +45,14 @@ class JobcategoriesChoicesWidget extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
               child: Text(
-                'Choose a category',
+                S.of(context).choose_a_category,
                 textAlign: TextAlign.left,
               ),
             ),
-
-            // child: DropdownButtonFormField(
-            //   hint: Text('Select options'),
-            //   items: options.map((option) {
-            //     return DropdownMenuItem(
-            //       value: option,
-            //       child: Row(
-            //         children: [
-            //           Checkbox(
-            //             value: cubit.selectedOptions.contains(option),
-            //             onChanged: (value) {
-            //               cubit.selectedOptionsChoices(value!, option);
-            //               onSelect(cubit.selectedOptions);
-            //             },
-            //           ),
-            //           Text(option),
-            //         ],
-            //       ),
-            //     );
-            //   }).toList(),
-            //   onChanged: (_) {},
-            // )
           ),
         ),
         Text(
-          'Choose a category which fits your job vacancy',
+          S.of(context).choose_category_fit,
           style: FontManager.text10,
         ),
         SizedBox(

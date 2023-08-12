@@ -80,7 +80,7 @@ class ListViewItem extends StatelessWidget {
           cubit.jobs[index].skills.toString() == 'null'
               ? Text(
                   'No Skills Required for this job',
-                  style: FontManager.blacktext12,
+                  style: Theme.of(context).textTheme.titleSmall!,
                 )
               : Wrap(
                   children: List.generate(

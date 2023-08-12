@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/common_widgets/customButtonWidget.dart';
 import 'package:job_app/core/constants.dart';
@@ -14,6 +15,7 @@ import 'package:job_app/presentation/views/widgets/profile_widgets/infoBlock_wid
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+import '../../generated/l10n.dart';
 import '../view_model/cubit/app_cubit.dart';
 import 'widgets/profile_widgets/cover&profile_images_widget.dart';
 import 'widgets/profile_widgets/skillsBlock_widget.dart';
@@ -24,7 +26,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    tokenHolder=CacheHelper.getData(key: tokenKey);
+    tokenHolder = CacheHelper.getData(key: tokenKey);
     return Scaffold(
       body: BlocProvider(
         create: (context) => AppCubit()..getUserData(),
@@ -35,6 +37,7 @@ class ProfileView extends StatelessWidget {
               await cubit.getUserData();
             }
             if (state is LogoutSuccessState) {
+              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(
                   context,
                   PageAnimationTransition(
@@ -45,8 +48,8 @@ class ProfileView extends StatelessWidget {
           builder: (context, state) {
             if (state is GetUserDataSuccessState) {
               AppCubit cubit = BlocProvider.of<AppCubit>(context);
-              SettingsCubit cubit2 =  BlocProvider.of<SettingsCubit>(context);
-
+              SettingsCubit cubit2 = BlocProvider.of<SettingsCubit>(context);
+//
               return SingleChildScrollView(
                 child: SafeArea(
                   child: Column(
@@ -94,43 +97,111 @@ class ProfileView extends StatelessWidget {
                       SkillsBlockWidget(
                         cubit: cubit,
                       ),
-                      const CustomDivider(),
+                      // const CustomDivider(),
                       SizedBox(
                         height: 20.h,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 70.h,
-                          child: CustomButton(
-                            text: 'Logout',
-                            color: ColorsManager.KprimaryColor,
-                            onpressed: () {
-                              cubit.logout();
-                            },
-                            textcolor: Colors.white,
-                          ),
-                        ),
-                      ),
-                      // BlocBuilder<SettingsCubit,SettingsState>(
-                      //   builder: (context,_) {
-                      //     return Text(cubit2.isDark== true ? 'Dark': 'Light');
-                      //   }
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: SizedBox(
-                      //     height: 70.h,
-                      //     child: CustomButton(
-                      //       text: 'Change Theme',
-                      //       color: ColorsManager.KprimaryColor,
-                      //       onpressed: () {
-                      //         cubit2.chanegTheme();
-                      //       },
-                      //       textcolor: Colors.white,
-                      //     ),
-                      //   ),
-                      // )
+                      BlocBuilder<SettingsCubit, SettingsState>(
+                        builder: (context, state) {
+                          return ExpansionTile(
+                            
+                            title: Text(
+                              S.of(context).Settings,
+                            ),
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Intl.getCurrentLocale() == 'en'
+                                        ? 7.w
+                                        : 10.w),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      S.of(context).Theme,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 15.w),
+                                      child: Row(
+                                        children: [
+                                          Text(S.of(context).Light),
+                                          Switch(
+                                            value: cubit2.isDark,
+                                            onChanged: (value) {
+                                              cubit2.switchThemeToggle(value);
+                                            },
+                                          ),
+                                          Text(S.of(context).Dark),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Intl.getCurrentLocale() == 'en'
+                                        ? 7.w
+                                        : 10.w),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      S.of(context).Language,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: Intl.getCurrentLocale() == 'en'
+                                            ? 11.w
+                                            : 0.w,
+                                        left: Intl.getCurrentLocale() == 'ar'
+                                            ? 0.w
+                                            : 11.w,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(S.of(context).En),
+                                          Switch(
+                                            value: cubit2.isEn,
+                                            onChanged: (value) {
+                                              cubit2
+                                                  .switchLanguageToggle(value);
+                                            },
+                                          ),
+                                          Text(S.of(context).Ar),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 70.h,
+                                  child: CustomButton(
+                                    text: 'Logout',
+                                    color: ColorsManager.KprimaryColor,
+                                    onpressed: () {
+                                      cubit.logout();
+                                    },
+                                    textcolor: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),

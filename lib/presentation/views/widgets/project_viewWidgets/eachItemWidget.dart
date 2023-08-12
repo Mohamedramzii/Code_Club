@@ -25,7 +25,7 @@ class EachItemWidget extends StatelessWidget {
       children: [
         Text(
           aboveFieldText,
-          style: FontManager.blacktext12,
+          style: Theme.of(context).textTheme.titleSmall!,
         ),
         CustomTextField(
           isDescription: isDescription,

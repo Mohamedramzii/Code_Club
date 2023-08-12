@@ -1,4 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,6 +8,7 @@ import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/constants.dart';
 
 import '../../../../core/common_widgets/dialog_widget.dart';
+import '../../../../generated/l10n.dart';
 import '../../../view_model/cubit/app_cubit.dart';
 
 class InfoBlockWidget extends StatelessWidget {
@@ -33,31 +35,31 @@ class InfoBlockWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Information',
+            S.of(context).information,
             style: FontManager.blacktext15
                 .copyWith(color: ColorsManager.KprimaryColor),
           ),
           SizedBox(
             height: 17.h,
           ),
-          _buildRow(
-              EvaIcons.globe, 'Website', website, 'website', context, false),
+          _buildRow(EvaIcons.globe, S.of(context).Website, website,
+              S.of(context).Website, context, false),
           SizedBox(
             height: 18.h,
           ),
-          _buildRow(
-              EvaIcons.emailOutline, 'Email', email, 'email', context, true),
+          _buildRow(EvaIcons.emailOutline, S.of(context).Email, email,
+              S.of(context).Email, context, true),
           SizedBox(
             height: 18.h,
           ),
-          _buildRow(EvaIcons.phoneOutline, 'Phone', phone, 'phoneNumber',
-              context, false),
+          _buildRow(EvaIcons.phoneOutline, S.of(context).Phone, phone,
+              S.of(context).Phone, context, false),
           SizedBox(
             height: 18.h,
           ),
           _buildRoforJoined(
             EvaIcons.calendarOutline,
-            'Joined',
+            S.of(context).joined,
             joinedat,
           ),
         ],
@@ -135,7 +137,7 @@ class InfoBlockWidget extends StatelessWidget {
         ),
         Text(
           info.toString(),
-          style: FontManager.blacktext12,
+          style: Theme.of(context).textTheme.titleSmall!,
         )
       ],
     );

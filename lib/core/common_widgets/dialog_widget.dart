@@ -46,7 +46,7 @@ abstract class CustomDialog {
               backgroundColor: Colors.white,
               title: Text(
                 'Edit your data',
-                style: FontManager.text25,
+                style: Theme.of(context).textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
               content: SizedBox(
@@ -58,6 +58,7 @@ abstract class CustomDialog {
                   },
                   decoration: InputDecoration(
                       hintText: 'Update Your $whatToUpdate',
+                      hintStyle: Theme.of(context).textTheme.bodySmall,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.r))),
                 ),

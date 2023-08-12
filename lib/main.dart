@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/theme.dart';
-
 import 'package:job_app/core/constants.dart';
+import 'package:job_app/generated/l10n.dart';
 import 'package:job_app/presentation/view_model/cubit/app_cubit.dart';
 import 'package:job_app/presentation/views/App_layout.dart';
 import 'package:job_app/presentation/views/auth/login_view.dart';
@@ -21,9 +21,10 @@ void main() async {
   await CacheHelper.init();
 
   tokenHolder = CacheHelper.getData(key: tokenKey) ?? 'no token yet';
-  changedToDark = CacheHelper.getData(key: themeKey);
+  theme = CacheHelper.getData(key: themeKey);
+  // changedToDark = await CacheHelper.getData(key: themeKey);
   debugPrint(tokenHolder);
-  debugPrint('----Theme----${changedToDark == true ? 'Dark' : 'Light'}');
+  debugPrint('----Theme----${theme ? 'Dark' : 'Light'}');
 
   Widget? widget;
 
@@ -37,7 +38,6 @@ void main() async {
     // isDark: changedToDark!,
   ));
 }
-
 
 // ThemeManager _themeManager=ThemeManager();
 class MyApp extends StatelessWidget {
@@ -63,7 +63,9 @@ class MyApp extends StatelessWidget {
                 ..getJobs(),
             ),
             BlocProvider<SettingsCubit>(
-              create: (context) => SettingsCubit(),
+              create: (context) => SettingsCubit()
+                ..currentTheme()
+                ..currentLanguage(),
             ),
           ],
           child: BlocBuilder<SettingsCubit, SettingsState>(
@@ -72,15 +74,22 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
                 title: 'Flutter Demo',
                 debugShowCheckedModeBanner: false,
+                locale: cubit.isEn ? const Locale('ar') : const Locale('en'),
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
                 theme: lightTheme,
-                
-                
+
                 // CacheHelper.getData(key: themeKey)
                 //     ? ThemeData.dark(useMaterial3: true)
                 //     : ThemeData.light(useMaterial3: true),
                 darkTheme: darkTheme,
                 // themeMode: cubit.themeMode,
-                themeMode: CacheHelper.getData(key: themeKey)==true ? ThemeMode.dark: ThemeMode.light,
+                themeMode: cubit.isDark ? ThemeMode.dark : ThemeMode.light,
                 home: widget);
           }),
         );

@@ -6,6 +6,7 @@ import 'package:job_app/core/app_managers/colors.dart';
 
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
+import '../../../../generated/l10n.dart';
 import '../../../view_model/cubit/app_cubit.dart';
 
 class SkillsBlockWidget extends StatefulWidget {
@@ -39,7 +40,7 @@ class _SkillsBlockWidgetState extends State<SkillsBlockWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-            'Skills',
+            S.of(context).skills,
             style: FontManager.blacktext15
                 .copyWith(color: ColorsManager.KprimaryColor),
           ),
@@ -52,7 +53,7 @@ class _SkillsBlockWidgetState extends State<SkillsBlockWidget> {
                   // enableKeyboardFocus: true,
                   durationInMilliSeconds: 500,
 
-                  hintText: 'Add A Skill',
+                  hintText:S.of(context).add_skills,
                   trailingWidget: InkWell(
                       onTap: () {
                         if (widget.controller.text.isNotEmpty) {
@@ -71,8 +72,8 @@ class _SkillsBlockWidgetState extends State<SkillsBlockWidget> {
                       child: Text('Add',
                           style: FontManager.blacktext12
                               .copyWith(color: ColorsManager.KprimaryColor))),
-                  secondaryButtonWidget: const Icon(EvaIcons.close),
-                  buttonWidget: const Icon(EvaIcons.plus),
+                  secondaryButtonWidget:  Icon(EvaIcons.close,color: ColorsManager.KprimaryColor,),
+                  buttonWidget:  Icon(EvaIcons.plus, color: ColorsManager.KprimaryColor,),
                   onFieldSubmitted: (value) {
                     if (widget.controller.text.isNotEmpty) {
                       skillList.add(widget.controller.text);

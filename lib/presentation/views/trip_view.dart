@@ -13,6 +13,7 @@ import 'package:job_app/presentation/views/widgets/project_viewWidgets/eachItemW
 
 import '../../core/app_managers/strings.dart';
 import '../../core/common_widgets/customToastWidget.dart';
+import '../../generated/l10n.dart';
 
 class TripView extends StatelessWidget {
   TripView({
@@ -29,6 +30,7 @@ class TripView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tr = S.of(context);
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
         if (state is PostJobDataSuccessState) {
@@ -49,8 +51,8 @@ class TripView extends StatelessWidget {
                   ),
                   EachItemWidget(
                     controller: controller1,
-                    aboveFieldText: ENstrings.addAProject,
-                    belowFieldText: ENstrings.underaddAProject,
+                    aboveFieldText: tr.addAProject,
+                    belowFieldText: tr.short_title,
                     isDescription: false,
                     maxlines: 1,
                   ),
@@ -59,8 +61,8 @@ class TripView extends StatelessWidget {
                   ),
                   EachItemWidget(
                     controller: controller2,
-                    aboveFieldText: ENstrings.projectRelatedSkills,
-                    belowFieldText: ENstrings.belowprojectRelatedSkills,
+                    aboveFieldText: tr.Project_Related_Skills,
+                    belowFieldText: tr.important_skills_required,
                     isDescription: false,
                     maxlines: 1,
                   ),
@@ -69,8 +71,8 @@ class TripView extends StatelessWidget {
                   ),
                   EachItemWidget(
                     controller: controller3,
-                    aboveFieldText: ENstrings.detailedDescr,
-                    belowFieldText: ENstrings.belowdetailedDescr,
+                    aboveFieldText: tr.Detaild_Description,
+                    belowFieldText: tr.short_title,
                     isDescription: true,
                     maxlines: 8,
                   ),
@@ -79,8 +81,9 @@ class TripView extends StatelessWidget {
                   ),
                   EachItemWidget(
                     controller: controller4,
-                    aboveFieldText: ENstrings.projectBudget,
-                    belowFieldText: ENstrings.belowprojectBudget,
+                    aboveFieldText: tr.Project_Budget,
+                    belowFieldText:
+                        tr.Choose_a_suitable_budget_to_get_good_deals,
                     isDescription: false,
                     maxlines: 1,
                   ),
@@ -89,8 +92,8 @@ class TripView extends StatelessWidget {
                   ),
                   EachItemWidget(
                     controller: controller5,
-                    aboveFieldText: ENstrings.deliverytime,
-                    belowFieldText: ENstrings.belowdeliverytime,
+                    aboveFieldText: tr.Expected_Delivery_Time,
+                    belowFieldText: tr.When_to_receive,
                     isDescription: false,
                     maxlines: 1,
                   ),
@@ -99,7 +102,11 @@ class TripView extends StatelessWidget {
                   ),
                   JobcategoriesChoicesWidget(
                     cubit: cubit,
-                    options: const ['Design', 'Programming', 'Management'],
+                    options: [
+                      S.of(context).Design,
+                      S.of(context).Programming,
+                      S.of(context).Management
+                    ],
                     onSelect: (selectedOption) {
                       print('Selected options: $selectedOption');
                       selectedCategory = selectedOption.isEmpty

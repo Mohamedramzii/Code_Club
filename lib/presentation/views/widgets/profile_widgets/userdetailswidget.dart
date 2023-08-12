@@ -38,7 +38,7 @@ class UserDetailsWidget extends StatelessWidget {
         _buildRow(
             context: context,
             text: name,
-            textstyle: FontManager.blacktext15,
+            textstyle: Theme.of(context).textTheme.titleSmall!,
             whatToUpdate: 'username',
             isBio: false),
         Row(
