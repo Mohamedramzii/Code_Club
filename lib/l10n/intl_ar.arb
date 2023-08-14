@@ -8,6 +8,8 @@
     "Password": "الرقم السري",
     "Forgot_password?": "نسيت الرقم السري؟",
     "Sign_In": "تسجيل دخول",
+    "Sign_up": "انشاء حساب",
+    "DontHaveAccount": "ليس لديك حساب ؟",
     "Username": "اسم المستجدم",
     "Enter_your_Username": "ادخل اسم المستخدم",
     "short_title": "قم بتضمين عنوان قصير يصف مشروعك بدقة",
@@ -39,5 +41,10 @@
     "joined": "انضم في",
     "information":"معلومات",
     "add_skills":"أضف مهارة",
-    "skills":"مهارات"
+    "skills":"مهارات",
+    "Categories": "الفئات",
+    "HelloThere": "مرحبا بك",
+    "Explore": "استكشف فرص العمل",
+    "SeeAll": "الكل",
+    "Remember":"تذكر لمدة 30 يوم"
 }

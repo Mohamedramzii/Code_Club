@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 import 'package:job_app/core/constants.dart';
 import 'package:job_app/core/helpers/local/cache_helper.dart';
@@ -48,7 +47,7 @@ class HomeView extends StatelessWidget {
                     ? Expanded(
                         child: Center(
                             child: Text(
-                          'No Data Here',
+                          'Getting Data...',
                           style: FontManager.text25,
                         )),
                       )

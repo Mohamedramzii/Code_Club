@@ -63,7 +63,9 @@ class ProfileView extends StatelessWidget {
                         name: cubit.userDataModel!.name!,
                         slug: cubit.userDataModel!.slug == null
                             ? '@yourslug'
-                            : '@${cubit.userDataModel!.slug}',
+                            : Intl.getCurrentLocale() == 'en'
+                                ? '@${cubit.userDataModel!.slug}'
+                                : '${cubit.userDataModel!.slug}@',
                         joinedat: cubit.userDataModel!.joinedAt!,
                         cubit: cubit,
                         bio: cubit.userDataModel!.bio == null
@@ -104,7 +106,6 @@ class ProfileView extends StatelessWidget {
                       BlocBuilder<SettingsCubit, SettingsState>(
                         builder: (context, state) {
                           return ExpansionTile(
-                            
                             title: Text(
                               S.of(context).Settings,
                             ),

@@ -23,12 +23,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Ar": MessageLookupByLibrary.simpleMessage("العربية"),
+        "Categories": MessageLookupByLibrary.simpleMessage("الفئات"),
         "Choose_a_suitable_budget_to_get_good_deals":
             MessageLookupByLibrary.simpleMessage(
                 "اختر ميزانية مناسبة للحصول على صفقات جيدة"),
         "Dark": MessageLookupByLibrary.simpleMessage("داكن"),
         "Design": MessageLookupByLibrary.simpleMessage("تصميم"),
         "Detaild_Description": MessageLookupByLibrary.simpleMessage("وصف مفصل"),
+        "DontHaveAccount":
+            MessageLookupByLibrary.simpleMessage("ليس لديك حساب ؟"),
         "Email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
         "En": MessageLookupByLibrary.simpleMessage("الانجليزية"),
         "Enter_your_Username":
@@ -39,6 +42,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور"),
         "Expected_Delivery_Time": MessageLookupByLibrary.simpleMessage(
             "وقت التسليم المتوقع (بالأيام)"),
+        "Explore": MessageLookupByLibrary.simpleMessage("استكشف فرص العمل"),
+        "HelloThere": MessageLookupByLibrary.simpleMessage("مرحبا بك"),
         "Job_category": MessageLookupByLibrary.simpleMessage("تصنيف العمل"),
         "Language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "Light": MessageLookupByLibrary.simpleMessage("فاتح"),
@@ -50,8 +55,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ميزانية المشروع"),
         "Project_Related_Skills":
             MessageLookupByLibrary.simpleMessage("المهارات المتعلقة بالمشروع"),
+        "Remember": MessageLookupByLibrary.simpleMessage("تذكر لمدة 30 يوم"),
+        "SeeAll": MessageLookupByLibrary.simpleMessage("الكل"),
         "Settings": MessageLookupByLibrary.simpleMessage("اعدادات التطبيق"),
         "Sign_In": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
+        "Sign_up": MessageLookupByLibrary.simpleMessage("انشاء حساب"),
         "Theme": MessageLookupByLibrary.simpleMessage("مظهر"),
         "Username": MessageLookupByLibrary.simpleMessage("اسم المستجدم"),
         "Website": MessageLookupByLibrary.simpleMessage("موقع إلكتروني"),

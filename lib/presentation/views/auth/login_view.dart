@@ -16,6 +16,7 @@ import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/common_widgets/customButtonWidget.dart';
 import '../../../core/common_widgets/customToastWidget.dart';
+import '../../../generated/l10n.dart';
 import '../App_layout.dart';
 
 class LoginView extends StatefulWidget {
@@ -92,8 +93,8 @@ class _LoginViewState extends State<LoginView> {
                     height: 70.h,
                   ),
                   CustomTextFormFieldWidget(
-                      textfieldHeadername: ENstrings.email,
-                      hinttext: ENstrings.enteremail,
+                      textfieldHeadername:S.of(context).Email,
+                      hinttext: S.of(context).Enter_your_email,
                       controller: emailController,
                       isPassword: false,
                       onsave: (value) {
@@ -111,8 +112,8 @@ class _LoginViewState extends State<LoginView> {
                     height: 10.h,
                   ),
                   CustomTextFormFieldWidget(
-                      textfieldHeadername: ENstrings.password,
-                      hinttext: ENstrings.enterpassword,
+                      textfieldHeadername: S.of(context).Password,
+                      hinttext: S.of(context).Enter_your_password,
                       controller: passwordController,
                       isPassword: true,
                       onsave: (value) {
@@ -155,7 +156,7 @@ class _LoginViewState extends State<LoginView> {
                               },
                             ),
                             Text(
-                              'Remember for 30 days',
+                              S.of(context).Remember,
                               style: FontManager.blacktext12,
                             ),
                           ],
@@ -164,7 +165,7 @@ class _LoginViewState extends State<LoginView> {
                           onPressed: () {
                             emailRequest_btmsheet(context, cubit);
                           },
-                          child: Text(ENstrings.forgotpassword,
+                          child: Text(S.of(context).Forgot_password,
                               style: FontManager.blacktext12.copyWith(
                                   color: ColorsManager.KprimaryColor)),
                         )
@@ -175,7 +176,7 @@ class _LoginViewState extends State<LoginView> {
                       ? Padding(
                           padding: EdgeInsets.symmetric(horizontal: 32.w),
                           child: CustomButton(
-                            text: ENstrings.signin,
+                            text: S.of(context).Sign_In,
                             color: ColorsManager.KprimaryColor,
                             bordercolor: ColorsManager.KprimaryColor,
                             textcolor: Colors.white,
@@ -220,7 +221,7 @@ class _LoginViewState extends State<LoginView> {
                               pageAnimationType: RightToLeftTransition()));
                         },
                         child: Text(
-                          'SignUp',
+                          S.of(context).Sign_up,
                           style: FontManager.greytext12
                               .copyWith(color: ColorsManager.KprimaryColor),
                         ),

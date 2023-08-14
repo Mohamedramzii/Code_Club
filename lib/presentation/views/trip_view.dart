@@ -36,6 +36,9 @@ class TripView extends StatelessWidget {
         if (state is PostJobDataSuccessState) {
           Toast.successToast(text: state.successMessage);
         }
+        if(state is PostJobDataFailureState){
+          Toast.failureToast(text: state.errMessage);
+        }
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);

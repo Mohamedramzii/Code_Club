@@ -262,7 +262,7 @@ class AppCubit extends Cubit<AppState> {
     } on DioError catch (e) {
       debugPrint('Post Job error Message: ${e.message}');
       debugPrint('Post Job error statusCode: ${e.response!}');
-      emit(PostJobDataFailureState(errMessage: e.toString()));
+      emit(PostJobDataFailureState(errMessage: e.response.toString()));
     }
   }
 

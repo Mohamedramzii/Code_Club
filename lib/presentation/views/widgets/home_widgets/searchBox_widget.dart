@@ -5,6 +5,8 @@ import 'package:job_app/core/app_managers/ImagesManager.dart';
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
 
+import '../../../../generated/l10n.dart';
+
 class SearchBoxWidget extends StatelessWidget {
   const SearchBoxWidget({super.key});
 
@@ -34,7 +36,7 @@ class SearchBoxWidget extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 labelStyle: FontManager.blacktext12,
-                hintText: 'Explore Something Fun',
+                hintText: S.of(context).Explore,
                 hintStyle: FontManager.greytext12,
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(bottom: 18.h),

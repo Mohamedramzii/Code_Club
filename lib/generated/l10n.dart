@@ -70,7 +70,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'Welcome_Back!_please_enter_your_details' key
+  /// `Welcome Back! please enter your details`
+  String get Welcome_Back_please_enter_your_details {
+    return Intl.message(
+      'Welcome Back! please enter your details',
+      name: 'Welcome_Back_please_enter_your_details',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Email`
   String get Email {
@@ -112,13 +120,51 @@ class S {
     );
   }
 
-  // skipped getter for the 'Forgot_password?' key
+  /// `Forgot password?`
+  String get Forgot_password {
+    return Intl.message(
+      'Forgot password?',
+      name: 'Forgot_password',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Sign In`
   String get Sign_In {
     return Intl.message(
       'Sign In',
       name: 'Sign_In',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SignUp`
+  String get Sign_up {
+    return Intl.message(
+      'SignUp',
+      name: 'Sign_up',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account? `
+  String get DontHaveAccount {
+    return Intl.message(
+      'Don\'t have an account? ',
+      name: 'DontHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remember for 30 days`
+  String get Remember {
+    return Intl.message(
+      'Remember for 30 days',
+      name: 'Remember',
       desc: '',
       args: [],
     );
@@ -439,6 +485,46 @@ class S {
     return Intl.message(
       'Skills',
       name: 'skills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get Categories {
+    return Intl.message(
+      'Categories',
+      name: 'Categories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hello there`
+  String get HelloThere {
+    return Intl.message(
+      'Hello there',
+      name: 'HelloThere',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore Job Vacancies`
+  String get Explore {
+    return Intl.message(
+      'Explore Job Vacancies',
+      name: 'Explore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See All`
+  String get SeeAll {
+    return Intl.message(
+      'See All',
+      name: 'SeeAll',
       desc: '',
       args: [],
     );

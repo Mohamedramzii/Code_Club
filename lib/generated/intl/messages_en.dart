@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Ar": MessageLookupByLibrary.simpleMessage("Arabic"),
+        "Categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "Choose_a_suitable_budget_to_get_good_deals":
             MessageLookupByLibrary.simpleMessage(
                 "Choose a suitable budget to get good deals"),
@@ -30,6 +31,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Design": MessageLookupByLibrary.simpleMessage("Design"),
         "Detaild_Description":
             MessageLookupByLibrary.simpleMessage("Detaild Description"),
+        "DontHaveAccount":
+            MessageLookupByLibrary.simpleMessage("Don\'t have an account? "),
         "Email": MessageLookupByLibrary.simpleMessage("Email"),
         "En": MessageLookupByLibrary.simpleMessage("English"),
         "Enter_your_Username":
@@ -40,6 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter your password"),
         "Expected_Delivery_Time": MessageLookupByLibrary.simpleMessage(
             "Expected Delivery Time (In Days)"),
+        "Explore":
+            MessageLookupByLibrary.simpleMessage("Explore Job Vacancies"),
+        "Forgot_password":
+            MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "HelloThere": MessageLookupByLibrary.simpleMessage("Hello there"),
         "Job_category": MessageLookupByLibrary.simpleMessage("Job category"),
         "Language": MessageLookupByLibrary.simpleMessage("Language"),
         "Light": MessageLookupByLibrary.simpleMessage("Light"),
@@ -51,12 +59,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Project Budget"),
         "Project_Related_Skills":
             MessageLookupByLibrary.simpleMessage("Project Related Skills"),
+        "Remember":
+            MessageLookupByLibrary.simpleMessage("Remember for 30 days"),
+        "SeeAll": MessageLookupByLibrary.simpleMessage("See All"),
         "Settings": MessageLookupByLibrary.simpleMessage("App Settings"),
         "Sign_In": MessageLookupByLibrary.simpleMessage("Sign In"),
+        "Sign_up": MessageLookupByLibrary.simpleMessage("SignUp"),
         "Theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "Username": MessageLookupByLibrary.simpleMessage("Username"),
         "Website": MessageLookupByLibrary.simpleMessage("Website"),
         "Welcome_Back": MessageLookupByLibrary.simpleMessage("Welcome Back"),
+        "Welcome_Back_please_enter_your_details":
+            MessageLookupByLibrary.simpleMessage(
+                "Welcome Back! please enter your details"),
         "When_to_receive": MessageLookupByLibrary.simpleMessage(
             "When do you need to receive your project?"),
         "addAProject": MessageLookupByLibrary.simpleMessage("Add A Project"),

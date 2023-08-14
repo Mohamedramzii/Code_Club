@@ -1,7 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import 'package:job_app/core/app_managers/colors.dart';
 import 'package:job_app/core/app_managers/fonts.dart';
@@ -33,6 +33,7 @@ class InfoBlockWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             S.of(context).information,
@@ -71,6 +72,7 @@ class InfoBlockWidget extends StatelessWidget {
       context, bool isEmail) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -80,7 +82,7 @@ class InfoBlockWidget extends StatelessWidget {
               size: 20,
             ),
             SizedBox(
-              width: 15.w,
+              width: 0.w,
             )
             //text
             ,
@@ -158,11 +160,11 @@ class InfoBlockWidget extends StatelessWidget {
               icon,
               size: 20,
             ),
-            SizedBox(
-              width: 15.w,
-            )
+            // SizedBox(
+            //   width: 15.w,
+            // )
             //text
-            ,
+            
             Text(
               text,
               style: FontManager.greytext12,

@@ -1,13 +1,16 @@
 {
     "addAProject": "Add A Project",
     "Welcome_Back": "Welcome Back",
-    "Welcome_Back!_please_enter_your_details": "Welcome Back! please enter your details",
+    "Welcome_Back_please_enter_your_details": "Welcome Back! please enter your details",
     "Email": "Email",
     "Enter_your_email": "Enter your email",
     "Enter_your_password": "Enter your password",
     "Password": "Password",
-    "Forgot_password?": "Forgot password?",
+    "Forgot_password": "Forgot password?",
     "Sign_In": "Sign In",
+    "Sign_up": "SignUp",
+    "DontHaveAccount": "Don't have an account? ",
+    "Remember": "Remember for 30 days",
     "Username": "Username",
     "Enter_your_Username": "Enter your Username",
     "short_title": "Include a short title that accurately describes your project.",
@@ -37,7 +40,11 @@
     "Website": "Website",
     "Phone": "phone",
     "joined": "Joined at",
-    "information":"Information",
-    "add_skills":"Add A Skill",
-    "skills":"Skills"
+    "information": "Information",
+    "add_skills": "Add A Skill",
+    "skills": "Skills",
+    "Categories": "Categories",
+    "HelloThere": "Hello there",
+    "Explore": "Explore Job Vacancies",
+    "SeeAll": "See All"
 }
