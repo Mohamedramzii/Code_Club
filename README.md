@@ -24,3 +24,6 @@
 - Dio for managing api's requests
 - Postman to test api's requests.
 - File picker to pick files from user device.
+
+
+## for a review, visit my linkedin: https://www.linkedin.com/posts/muhammed-ramzy-136989204_flutter-flutterdeveloper-uiux-activity-7097683473376645120-8IkJ?utm_source=share&utm_medium=member_android
